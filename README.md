@@ -5,10 +5,15 @@ Senior Capstone Project
 
 
 -Install VSCode - https://code.visualstudio.com/download
+
 -Install Eclipse/Netbeans/... - For Java IDE and Java
+
 -Install NodeJS & npm - https://www.npmjs.com/get-npm
+
 -Install Angular CLI - https://cli.angular.io/
+
 -Install PostgreSQL - https://www.postgresql.org/download/
+
 -Install Git Bash - https://git-scm.com/downloads
 
 
