@@ -69,5 +69,32 @@ ng g service Service_Name
 
 ### Working with Spring Boot
 
+1) Open preferred IDE for Java
+2) Import project/ Import existing maven project
+3) 
+
+
+
+***
+
+
+### Working with postgreSQL database (local)
+
+##### Importing a prefilled database:
+- create a database pizzadb in psql (CREATE DATABASE munchiedb;)
+- run psql -U postgres pizzadb < munchiedb.psql
+
+##### Exporting a database for others to see:
+- run pg_dump -U postgres munchiedb > munchiedb.psql
+- git add .
+- git commit -m "Whatever change has happened mention here"
+
+##### Interacting with the database:
+- Make sure PSQL is running
+  - Go to terminal/cmd 
+  - Enter psql -U postgres
+  - password : Enter your password here
+  - enter \c munchiedb
+  - now you can interact with the DB with SQL commands
 
 
