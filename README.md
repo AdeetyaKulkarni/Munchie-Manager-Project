@@ -33,3 +33,41 @@ ng serve
 -Open the folder proj in a IDE  
 -Run the project  
 -After successfull execution it should be available on - http://localhost:8080/  
+
+
+***
+
+### Working with Angular
+
+To create a new component 
+```
+ng g c Component_Name
+```
+
+To create a new service
+```
+ng g service Service_Name
+```
+
+##### Component
+- Create the component using ng g c  
+- Add the component path in app-routing.module.ts
+- Each file has 3 components  
+1) HTML  
+2) CSS  
+3) TS  
+
+##### Service
+- Create the service using ng g service  
+- We use service to call the api we build in the backend  
+- In the service we define the api-call  
+- In the module we call the service-function  
+
+
+***
+
+
+### Working with Spring Boot
+
+
+
