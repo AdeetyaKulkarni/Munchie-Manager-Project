@@ -69,12 +69,20 @@ ng g service Service_Name
 
 ### Working with Spring Boot
 
-1) Open preferred IDE for Java
-2) Import project/ Import existing maven project
-3) 
-
-
-
+1) Open preferred IDE for Java  
+2) Import project/ Import existing maven project  
+3) Select folder MunchieManagerBE    
+4) The project is divided into 4 parts    
+  - com.project.MunchieManagerBE - Main method of the application  
+  - com.project.MunchieManagerBE.Controllers  - Contains all the apis    
+  - com.project.MunchieManagerBE.Beans - Contains the class/objects  
+  - com.project.MunchieManagerBE.DBRepos - Contains sql queries embedded in java methods   
+5) Run the project and check if Controller is working by navigating to localhost:8080/test  
+6) In postgres create a database called *munchiedb*  
+7) Re-run the project  
+8) Enter some data manually in the name table in the database.  
+9) Navigate to localhost:8080/checkdb  
+10) If you see the entered data everything is fine.  
 ***
 
 
