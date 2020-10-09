@@ -30,6 +30,75 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: name; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.name (
+    table_id bigint NOT NULL,
+    fname character varying(255) NOT NULL,
+    lname character varying(255) NOT NULL
+);
+
+
+ALTER TABLE public.name OWNER TO postgres;
+
+--
+-- Name: name_table_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.name_table_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.name_table_id_seq OWNER TO postgres;
+
+--
+-- Name: name_table_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.name_table_id_seq OWNED BY public.name.table_id;
+
+
+--
+-- Name: name table_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.name ALTER COLUMN table_id SET DEFAULT nextval('public.name_table_id_seq'::regclass);
+
+
+--
+-- Data for Name: name; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.name (table_id, fname, lname) FROM stdin;
+1	adee	kulka
+\.
+
+
+--
+-- Name: name_table_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.name_table_id_seq', 1, true);
+
+
+--
+-- Name: name name_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.name
+    ADD CONSTRAINT name_pkey PRIMARY KEY (table_id);
+
+
 --
 -- PostgreSQL database dump complete
 --
