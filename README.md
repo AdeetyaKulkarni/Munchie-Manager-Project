@@ -122,6 +122,7 @@ Compare all the differences
 git checkout master  
 git merge dev  
 
+- ! After every remote push its required for all to git pull before they push.
 
 
 
