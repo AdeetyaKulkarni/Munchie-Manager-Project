@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BaseserviceService } from '../Services/baseservice.service';
 
 @Component({
   selector: 'app-main-page',
@@ -7,9 +8,42 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainPageComponent implements OnInit {
 
-  constructor() { }
+  // This is my random variable - right now its empty but i will fill it with
+  // data recieved from my service
+  mystring = ""
+
+
+  constructor(private service: BaseserviceService) { }
 
   ngOnInit() {
+
+    //The functions inside ngOnInit execute right after the page loads
+    console.log("Hello")
+    this.callTestService()
+    
+  }
+
+
+  callTestService(){
+
+      // Step 4: Put in the constructor params - "private service: <service-file-name>"
+      // Here i am going to call the test-service we created
+      // Once you call the service method you have to subscribe to it
+      // In the subscription you add what happens when response/error is received
+
+      this.service.TestService().subscribe(
+
+        response => {
+          // Here i fill my variable with the data received  
+          this.mystring = response
+          // After filling it I print it out in the main-page.html
+        },
+        error => {
+          this.mystring = "ERROR!"
+        }
+
+      )
+
   }
 
 }
