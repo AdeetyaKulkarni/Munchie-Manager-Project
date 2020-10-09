@@ -106,3 +106,26 @@ ng g service Service_Name
   - now you can interact with the DB with SQL commands
 
 
+##### GIT PROTOCOL
+- git checkout dev (Switches branch to dev)  
+- Simple changes (Not working updates)  
+git add .  
+git commit -m "Still remaining xyz"  
+
+- Final changes (Everything working and ready to push to remote)
+git add .  
+git commit -m "XYZ WORKING"  
+git push origin dev  
+
+- Merging
+Compare all the differences   
+git checkout master  
+git merge dev  
+
+- ! After every remote push its required for all to git pull before they push.
+
+
+
+
+
+
