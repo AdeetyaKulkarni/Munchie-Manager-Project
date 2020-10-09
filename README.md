@@ -89,8 +89,8 @@ ng g service Service_Name
 ### Working with postgreSQL database (local)
 
 ##### Importing a prefilled database:
-- create a database pizzadb in psql (CREATE DATABASE munchiedb;)
-- run psql -U postgres pizzadb < munchiedb.psql
+- create a database munchiedb in psql (CREATE DATABASE munchiedb;)
+- run psql -U postgres munchiedb < munchiedb.psql
 
 ##### Exporting a database for others to see:
 - run pg_dump -U postgres munchiedb > munchiedb.psql
