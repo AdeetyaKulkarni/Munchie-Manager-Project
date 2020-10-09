@@ -124,7 +124,9 @@ git merge dev
 
 - ! After every remote push its required for all to git pull before they push.
 
-
+##### Feature Distribution
+1) Login/Logout/Register ( Adeetya, Harsh )
+2) Manager Dashboard + Inventory ( Abbey, Grace, Liam )
 
 
 
