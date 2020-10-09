@@ -21,7 +21,7 @@ public class ApplicationController {
 	@GetMapping(path="/test")
 	public String getTest() 
 	{
-		return "API's are working!";
+		return "API's are working! CHANGED";
 	} 
 
 	
