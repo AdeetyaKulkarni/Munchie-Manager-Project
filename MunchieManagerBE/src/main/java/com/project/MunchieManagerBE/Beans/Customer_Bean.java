@@ -8,8 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Employee")
-public class Employee_Bean {
+@Table(name = "Customer")
+public class Customer_Bean {
 
 	long id;
 	String firstname;
@@ -17,18 +17,15 @@ public class Employee_Bean {
 	String email;
 	String username;
 	String password;
-	String restaurant_name;
-	String restaurant_address;
 	int privilege;
 	
 	
-	public void Employee_Bean() {}
+	public void Customer_Bean() {}
 
 
 	
 
-	public Employee_Bean(long id, String firstname, String lastname, String email, String username, String password,
-			String restaurant_name, String restaurant_address, int privilege) {
+	public Customer_Bean(long id, String firstname, String lastname, String email, String username, String password, int privilege) {
 		super();
 		this.id = id;
 		this.firstname = firstname;
@@ -36,8 +33,6 @@ public class Employee_Bean {
 		this.email = email;
 		this.username = username;
 		this.password = password;
-		this.restaurant_name = restaurant_name;
-		this.restaurant_address = restaurant_address;
 		this.privilege = privilege;
 	}
 
@@ -76,16 +71,6 @@ public class Employee_Bean {
 		return password;
 	}
 
-	@Column(name = "restaurantname")
-	public String getRestaurant_name() {
-		return restaurant_name;
-	}
-
-	@Column(name = "restaurantaddress")
-	public String getRestaurant_address() {
-		return restaurant_address;
-	}
-
 	@Column(name = "privilege")
 	public int getprivilege() {
 		return privilege;
@@ -121,16 +106,6 @@ public class Employee_Bean {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-
-	public void setRestaurant_name(String restaurant_name) {
-		this.restaurant_name = restaurant_name;
-	}
-
-
-	public void setRestaurant_address(String restaurant_address) {
-		this.restaurant_address = restaurant_address;
 	}
 
 

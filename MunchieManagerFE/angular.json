@@ -120,6 +120,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "MunchieManagerFE"
+    }
+  },
+  "defaultProject": "MunchieManagerFE",
+  "cli": {
+    "analytics": "df85a6de-9b51-4296-81d3-bc4468eb52a5"
+  }
 }
