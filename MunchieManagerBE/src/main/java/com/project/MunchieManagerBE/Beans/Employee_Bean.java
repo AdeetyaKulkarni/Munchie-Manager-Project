@@ -12,7 +12,8 @@ import javax.persistence.Table;
 public class Employee_Bean {
 
 	long id;
-	String fullname;
+	String firstname;
+	String lastname;
 	String email;
 	String username;
 	String password;
@@ -24,11 +25,14 @@ public class Employee_Bean {
 	public void EmployeeBean() {}
 
 
-	public Employee_Bean(long id, String fullname, String email, String username, String password,
+	
+
+	public Employee_Bean(long id, String firstname, String lastname, String email, String username, String password,
 			String restaurant_name, String restaurant_address, int privilege) {
 		super();
 		this.id = id;
-		this.fullname = fullname;
+		this.firstname = firstname;
+		this.lastname = lastname;
 		this.email = email;
 		this.username = username;
 		this.password = password;
@@ -37,25 +41,34 @@ public class Employee_Bean {
 		this.privilege = privilege;
 	}
 
+
+
+
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	public long getId() {
 		return id;
 	}
 
-	@Column(name = "firstname")
-	public String getFullname() {
-		return fullname;
-	}
-
-	@Column(name = "lastname")
-	public String getEmail() {
-		return email;
-	}
 
 	@Column(name = "username")
 	public String getUsername() {
 		return username;
+	}
+	
+	@Column(name = "firstname")
+	public String getFirstname() {
+		return firstname;
+	}
+
+	@Column(name = "lastname")
+	public String getLastname() {
+		return lastname;
+	}
+
+	@Column(name = "email")
+	public String getEmail() {
+		return email;
 	}
 
 	@Column(name = "password")
@@ -78,14 +91,21 @@ public class Employee_Bean {
 		return privilege;
 	}
 
+	
+	
 
 	public void setId(long id) {
 		this.id = id;
 	}
 
 
-	public void setFullname(String fullname) {
-		this.fullname = fullname;
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+
+
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
 	}
 
 

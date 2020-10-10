@@ -30,4 +30,15 @@ export class BaseserviceService {
 
     }
 
+/*
+    LoginService(username, password){
+
+      let body = [username, password]
+      let url = "http://lovalhost:8080/login"
+      return this.http.post(url, body)
+
+    }
+*/
+
+
 }
