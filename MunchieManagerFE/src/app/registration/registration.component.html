@@ -1,0 +1,58 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<div class="container" *ngIf="!choice" style="width:30% !important; margin-top: 10%; padding:10px; border: solid;">
+    <h4 style="font-family: monospace; text-align: center;">What type of user are you?</h4><br>
+    <button class="btn btn-primary center-button" (click)="SetPrivilage(0)">MANAGER</button><br>
+    <button class="btn btn-info center-button" (click)="SetPrivilage(2)">CUSTOMER</button>
+</div>
+
+
+<div class="container" *ngIf="choice" style="width:30% !important; margin-bottom: 100px; margin-top: 50px;">
+ 
+    <div *ngIf=employee>
+
+        {{employee_bean.firstname}}
+
+        <div class="alert alert-danger" *ngIf="login_error">{{login_error}}</div>
+
+        <div class="card" style="padding:25px !important; border-color:lightgray; border-radius: 10px; box-shadow: 5px 5px 40px grey;">
+
+            <h3 style="text-align: center;"><b style="font-family:monospace; letter-spacing: 2px;">Register<br>Employee</b></h3><br>
+
+            <input type="text" class="form-control" [(ngModel)]="employee_bean.firstname" placeholder="firstname"><br>
+            <input type="text" class="form-control" [(ngModel)]="employee_bean.lastname" placeholder="lastname"/><br>
+            <input type="text" class="form-control" [(ngModel)]="employee_bean.email" placeholder="email"><br>
+            <input type="text" class="form-control" [(ngModel)]="employee_bean.password" placeholder="password"/><br>
+            <input type="text" class="form-control" [(ngModel)]="employee_bean.restaurant_name" placeholder="restaurant name"><br>
+            <input type="text" class="form-control" [(ngModel)]="employee_bean.restaurant_address" placeholder="restaurant address"/><br>
+            <button class="btn btn-success" (click)="Register(0)">Register</button><br>
+
+        </div>
+    </div>
+    
+
+    <div *ngIf=!employee>
+        <div class="alert alert-danger" *ngIf="login_error">{{login_error}}</div>
+
+        <div class="card" style="padding:25px !important; border-color:lightgray; border-radius: 10px; box-shadow: 5px 5px 40px grey;">
+
+            <h3 style="text-align: center;"><b style="font-family:monospace; letter-spacing: 2px;">Register<br>Customer</b></h3><br>
+
+            <input type="text" class="form-control" [(ngModel)]="customer_bean.firstname" placeholder="firstname"><br>
+            <input type="text" class="form-control" [(ngModel)]="customer_bean.lastname" placeholder="lastname"/><br>
+            <input type="text" class="form-control" [(ngModel)]="customer_bean.email" placeholder="email"><br>
+            <input type="text" class="form-control" [(ngModel)]="customer_bean.password" placeholder="password"/><br>
+            <button class="btn btn-success" (click)="Register(2)">Register</button><br>
+           
+
+        </div>
+    </div>
+
+
+
+
+
+</div>
+
+
+

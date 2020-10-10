@@ -9,9 +9,10 @@ import { FormsModule } from "@angular/forms";
 import { MainPageComponent } from "./main-page/main-page.component";
 import { LoginPageComponent } from './login-page/login-page.component';
 import { HeaderComponent } from './header/header.component';
+import { RegistrationComponent } from './registration/registration.component';
 
 @NgModule({
-  declarations: [AppComponent, MainPageComponent, LoginPageComponent, HeaderComponent],
+  declarations: [AppComponent, MainPageComponent, LoginPageComponent, HeaderComponent, RegistrationComponent],
   imports: [BrowserModule, FormsModule, HttpClientModule, AppRoutingModule],
   providers: [],
   bootstrap: [AppComponent],

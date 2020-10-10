@@ -16,7 +16,7 @@ import com.project.MunchieManagerBE.DBRepos.RegistrationRepo;
 import com.project.MunchieManagerBE.DBRepos.TestRepo;
 
 // Required in every controller file | If not included will result in CORS error in Angular.
-//@CrossOrigin(origins="http://localhost:4200", allowCredentials="true")
+@CrossOrigin(origins="http://localhost:4200", allowCredentials="true")
 
 @RestController  
 public class ApplicationController {

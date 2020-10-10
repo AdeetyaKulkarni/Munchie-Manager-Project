@@ -1,6 +1,33 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseserviceService } from '../Services/baseservice.service';
 
+//This is the bean for employee class
+export class Employee_Bean{constructor(
+    id:number,
+    firstname:string,
+    lastname:string,
+    email:string,
+    username:string,
+    password:string,
+    restaurant_name:string,
+    restaurant_address:string,
+    privilege:number
+){}}
+
+//This is the bean for customer class
+export class Customer_Bean{constructor(
+  id:number,
+  firstname:string,
+  lastname:string,
+  email:string,
+  username:string,
+  password:string,
+  privilege:number
+){}}
+
+
+
+
 @Component({
   selector: 'app-main-page',
   templateUrl: './main-page.component.html',

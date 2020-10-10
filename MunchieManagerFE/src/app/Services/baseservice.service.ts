@@ -30,15 +30,32 @@ export class BaseserviceService {
 
     }
 
-/*
-    LoginService(username, password){
 
-      let body = [username, password]
-      let url = "http://lovalhost:8080/login"
-      return this.http.post(url, body)
+    //---------------------REGISTRATION SERVICES ONLY-------------------------------------------
+
+
+    LoginService(loginstr){
+
+      let url = "http://localhost:8080/login"
+      return this.http.post<boolean>(url, loginstr)
 
     }
-*/
 
+
+    RegisterEmployee(employee_bean)
+    {
+      let url = "http://localhost:8080/employeeregister"
+      return this.http.post<boolean>(url, employee_bean);
+
+    }
+
+    RegisterCustomer(customer_bean)
+    {
+      let url = "http://localhost:8080/customerregister"
+      return this.http.post<boolean>(url, customer_bean);
+
+    }
+
+    //--------------------------------------------------------------------------------------------
 
 }

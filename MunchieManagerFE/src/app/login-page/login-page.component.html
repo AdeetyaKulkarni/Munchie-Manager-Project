@@ -1,1 +1,20 @@
-<p>login-page works!</p>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<div class="container" style="width:30% !important; padding-top: 100px;">
+ 
+    <div class="alert alert-danger" *ngIf="login_error">{{login_error}}</div>
+
+    <div class="card" style="padding:25px !important; border-color:lightgray; border-radius: 10px; box-shadow: 5px 5px 40px grey;">
+
+        <h3 style="text-align: center;"><b style="font-family:monospace; letter-spacing: 2px;">Log In</b></h3><br>
+
+            <input type="email" class="form-control" [(ngModel)]="email" placeholder="email"><br>
+            <input type="password" class="form-control" [(ngModel)]="password" placeholder="password"/><br>
+
+            <button class="btn btn-success" (click)="Login()">GO</button><br>
+            
+            <h5> New here? <br> <a routerLink="/register">Click here to register! </a></h5> 
+    </div>  
+
+</div>
