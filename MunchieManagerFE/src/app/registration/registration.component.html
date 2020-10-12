@@ -1,13 +1,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<div class="container" *ngIf="!choice" style="width:30% !important; margin-top: 10%; padding:10px; border: solid;">
+<div class="container" *ngIf="!choice" style="margin-top: 10%; padding:10px; border: solid;">
     <h4 style="font-family: monospace; text-align: center;">What type of user are you?</h4><br>
     <button class="btn btn-primary center-button" (click)="SetPrivilage(0)">MANAGER</button><br>
     <button class="btn btn-info center-button" (click)="SetPrivilage(2)">CUSTOMER</button>
 </div>
 
 
-<div class="container" *ngIf="choice" style="width:30% !important; margin-bottom: 100px; margin-top: 50px;">
+<div class="container" *ngIf="choice" style="margin-bottom: 100px; margin-top: 50px;">
  
     <div *ngIf=employee>
 
