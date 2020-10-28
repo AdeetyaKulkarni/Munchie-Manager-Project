@@ -1,3 +1,6 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
 <div class="container" style="background-color:whitesmoke; margin-top: 20px;">
     <h1 class="m-center"> Welcome Manager {{Manager_Name}} </h1>
 
@@ -41,7 +44,7 @@
         <div class="form" name="Employee_register_form" *ngIf="register_mode && !edit_mode">
             <div class="alert alert-danger" *ngIf="registration_error">{{registration_error}}</div>
 
-            <div class="center-form" style="padding:25px !important; border-color:lightgray; border-radius: 10px; box-shadow: 5px 5px 40px grey;">
+            <div class="center-form" style="border-color:lightgray; border-radius: 10px; box-shadow: 5px 5px 40px grey;">
 
                 <button class="btn btn-warning" (click)="Disable_register_mode()" >Back</button>
                 <h3 style="text-align: center;"><b style="font-family:monospace; letter-spacing: 2px;">Register<br>Employee</b></h3><br>

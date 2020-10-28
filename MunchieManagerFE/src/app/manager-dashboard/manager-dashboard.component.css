@@ -1,3 +1,38 @@
+/*For regular screen*/
+@media screen and (min-width: 900px) {
+  .container {
+    width: 30%;
+  }
+  .center-form {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    padding: 25px !important;
+  }
+}
+
+/*For tablet screen */
+@media screen and (min-width: 600px) and (max-width: 899px) {
+  .container {
+    width: 80%;
+  }
+}
+
+/* For mobile screen*/
+@media screen and (max-width: 600px) {
+  .container {
+    width: 100%;
+  }
+  .center-form {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    padding: 10px !important;
+  }
+}
+
 .center {
   text-align: center;
 }
@@ -29,11 +64,4 @@ th {
 
 tr:nth-child(even) {
   background-color: #dddddd;
-}
-
-.center-form {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 50%;
 }
