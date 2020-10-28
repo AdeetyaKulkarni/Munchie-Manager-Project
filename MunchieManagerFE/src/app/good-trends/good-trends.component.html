@@ -1,7 +1,22 @@
-<div class="container">
-    <div style="display: block">
-        <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
-            [legend]="barChartLegend" [chartType]="barChartType">
-        </canvas>
+<div>
+    <div class="container">
+        <div class="out-of-stock-title">
+            Intentory Used
+        </div>
+        <div style="display: block">
+            <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+                [plugins]="barChartPlugins" [legend]="barChartLegend" [chartType]="barChartType" [colors]="chartColors">
+            </canvas>
+        </div>
+        <div class="out-of-stock-title">
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>Inventory Items that ran out:</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    {{item}}
+                </mat-card-content>
+            </mat-card>
+        </div>
     </div>
 </div>

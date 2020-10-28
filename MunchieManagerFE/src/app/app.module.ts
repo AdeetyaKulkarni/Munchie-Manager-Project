@@ -16,21 +16,20 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { InventoryManagerComponent } from './inventory-manager/inventory-manager.component';
 import { GoodTrendsComponent } from './good-trends/good-trends.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import {MatToolbarModule} from '@angular/material/toolbar'; 
-import {MatListModule} from '@angular/material/list';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatListModule } from '@angular/material/list';
 import { RestaurantTrendsComponent } from './restaurant-trends/restaurant-trends.component';
 import { ReportingComponent } from './reporting/reporting.component';
 import { MenuCreationComponent } from './menu-creation/menu-creation.component';
 import { ChartsModule, ThemeService } from 'ng2-charts';
-
+import { MatCardModule } from '@angular/material/card';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import {MatTableModule} from '@angular/material/table';
-
-
-
+import { MatNativeDateModule } from '@angular/material';
+import { MatInputModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIcon, MatIconModule } from '@angular/material/icon';
+import { MatTableModule } from '@angular/material/table';
 
 
 @NgModule({
@@ -62,7 +61,10 @@ import {MatTableModule} from '@angular/material/table';
     MatNativeDateModule,
     MatFormFieldModule,
     MatInputModule,
-    MatTableModule
+    MatTableModule,
+    MatCardModule,
+    MatButtonModule,
+    MatIconModule,
   ],
   providers: [
     ThemeService,

@@ -16,8 +16,8 @@ export class DashboardComponent implements OnInit {
 
   links = [
     { path: 'manager-dashboard', label: 'Manager Dashboard' },
-    { path: 'good-trends', label: 'Good Trends' },
     { path: 'inventory-manager', label: 'Inventory Manager' },
+    { path: 'good-trends', label: 'Good Trends' },
     { path: "restaurant-trends", label: 'Restaurant Trends' },
     { path: "reporting", label: 'Reporting' },
     { path: "menu-creation", label: 'Menu Creation' },
