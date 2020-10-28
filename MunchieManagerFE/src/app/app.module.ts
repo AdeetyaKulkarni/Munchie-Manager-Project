@@ -23,6 +23,20 @@ import { ReportingComponent } from './reporting/reporting.component';
 import { MenuCreationComponent } from './menu-creation/menu-creation.component';
 import { ChartsModule, ThemeService } from 'ng2-charts';
 
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import {MatTableModule} from '@angular/material/table';
+
+
+//New mods
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {ReactiveFormsModule} from '@angular/forms';
+
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,6 +62,14 @@ import { ChartsModule, ThemeService } from 'ng2-charts';
     MatToolbarModule,
     MatListModule,
     ChartsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatTableModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule
+    
   ],
   providers: [
     ThemeService,

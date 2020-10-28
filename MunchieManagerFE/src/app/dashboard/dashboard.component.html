@@ -1,3 +1,4 @@
+
 <div class="wrapper">
     <nav mat-tab-nav-bar>
             <a mat-tab-link *ngFor="let link of links" [routerLink]="link.path" routerLinkActive #rla="routerLinkActive"
@@ -5,5 +6,4 @@
             </a>
     </nav>
 </div>
-
 <router-outlet></router-outlet>
