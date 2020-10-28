@@ -1,0 +1,16 @@
+<div class="container">
+
+    <div class="date-picker center-form">
+
+    <label class="big">From</label>
+    <input id="from" name="from-dp" [(ngModel)]="from_date" type="date" class="big">
+    
+    <label class="big">To</label>
+    <input id="to" name="to-dp" [(ngModel)]="to_date" type="date" class="big">
+    
+    </div>
+    <p class="center-form"> When submit is clicked it prints the selected dates in console </p>
+    <button class="btn btn-success center-form" (click)="Submit()">Submit</button>
+
+</div>
+

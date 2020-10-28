@@ -30,10 +30,6 @@ import { MatInputModule } from '@angular/material/input';
 import {MatTableModule} from '@angular/material/table';
 
 
-//New mods
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {ReactiveFormsModule} from '@angular/forms';
-
 
 
 
@@ -66,10 +62,7 @@ import {ReactiveFormsModule} from '@angular/forms';
     MatNativeDateModule,
     MatFormFieldModule,
     MatInputModule,
-    MatTableModule,
-    ReactiveFormsModule,
-    BrowserAnimationsModule
-    
+    MatTableModule
   ],
   providers: [
     ThemeService,
