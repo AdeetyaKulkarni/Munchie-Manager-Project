@@ -1,8 +1,5 @@
 /*For regular screen*/
 @media screen and (min-width: 900px) {
-  .container {
-    width: 30%;
-  }
   .center-form {
     display: block;
     margin-left: auto;
