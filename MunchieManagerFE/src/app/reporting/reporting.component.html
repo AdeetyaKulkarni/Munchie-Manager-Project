@@ -1,7 +1,11 @@
-<div class="container">
+<div class="container"style=" padding-top:100px;padding-bottom:100px;">
 
+    <label style=" position:relative;float:right;font-family:monospace;letter-spacing:2px;">:Email Report</label>
+    <mat-checkbox style=" height:19px;border:1px solid;position:relative;float:right;"></mat-checkbox>
+    
     <div class="date-picker center-form">
 
+    <h3 class="center-form"><b style="font-family:monospace; letter-spacing: 2px;">Generate Report</b></h3><br>
     <label class="big">From</label>
     <input id="from" name="from-dp" [(ngModel)]="from_date" type="date" class="big">
     
@@ -9,8 +13,9 @@
     <input id="to" name="to-dp" [(ngModel)]="to_date" type="date" class="big">
     
     </div>
+    
     <p class="center-form"> When submit is clicked it prints the selected dates in console </p>
-    <button class="btn btn-success center-form" (click)="Submit()">Submit</button>
+    <button class="btn btn-success center-form" (click)="Submit()">Print Report</button>
 
 </div>
 

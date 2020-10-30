@@ -1,1 +1,46 @@
-<p>menu-creation works!</p>
+<div class="container"style=" padding-top:100px;padding-bottom:100px;">
+
+    <h3 class="center-title"><b style="font-family:monospace; letter-spacing:2px;">Menu</b></h3><br>
+
+    <table class="center-table"style=" border:3pxsolid;width:60%;align-self:center;font-family:monospace;letter-spacing:2px;">
+        <!-- row -->
+        <tr style="border:2px solid;">
+          <th><h4>Item</h4></th>
+          <th><h4>Availiable/Unavailiable</h4></th>
+          <th><h4>Action</h4></th>
+        </tr>
+        <!-- row -->
+        <tr style="border:2px solid;">
+          <td>Cheese Fries</td>
+          <td>Availiable</td>
+          <td><button class="btn btn-success center-form" (click)="Submit()">Edit</button></td>
+        </tr>
+        <!-- row -->
+        <tr style="border:2px solid;">
+          <td>Silver King Margarita</td>
+          <td>Availiable</td>
+          <td><button class="btn btn-success center-form" (click)="Submit()">Edit</button></td>
+        </tr>
+        <!-- row -->
+       <tr style="border:2px solid;">
+          <td>Fried Fish Tacos</td>
+          <td>Unavailiable</td>
+          <td><button class="btn btn-success center-form" (click)="Submit()">Edit</button></td>
+        </tr>
+        <!-- row -->
+        <tr style="border:2px solid;">
+            <td>Nachos</td>
+            <td>Unavailiable</td>
+            <td><button class="btn btn-success center-form" (click)="Submit()">Edit</button></td>
+        </tr>
+        <!-- row -->
+        <tr style="border:2px solid;">
+            <td>Taco Salad</td>
+            <td>Availiable</td>
+            <td><button class="btn btn-success center-form" (click)="Submit()">Edit</button></td>
+        </tr>
+      </table>
+
+      <button class="btn btn-success center-form"style="margin-top:3%;margin-left:45%;"(click)="Submit()">Add Item</button>
+
+</div>

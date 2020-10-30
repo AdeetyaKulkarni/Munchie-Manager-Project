@@ -14,3 +14,15 @@ input {
 .big {
   font-size: 15px;
 }
+
+.corner {
+  display: block;
+  margin-top: auto;
+  margin-bottom: 12%;
+  margin-left: 12%;
+  margin-right: 13%;
+  
+}
+
+
+
