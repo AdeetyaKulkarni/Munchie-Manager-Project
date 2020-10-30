@@ -1,0 +1,16 @@
+.center-form {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30px;
+  width: 50%;
+}
+
+input {
+  padding: 20px;
+  margin: 20px;
+}
+
+.big {
+  font-size: 15px;
+}

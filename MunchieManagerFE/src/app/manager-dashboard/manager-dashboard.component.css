@@ -1,0 +1,64 @@
+/*For regular screen*/
+@media screen and (min-width: 900px) {
+  .center-form {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    padding: 25px !important;
+  }
+}
+
+/*For tablet screen */
+@media screen and (min-width: 600px) and (max-width: 899px) {
+  .container {
+    width: 80%;
+  }
+}
+
+/* For mobile screen*/
+@media screen and (max-width: 600px) {
+  .container {
+    width: 100%;
+  }
+  .center-form {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    padding: 10px !important;
+  }
+}
+
+.center {
+  text-align: center;
+}
+.m-center {
+  margin: 30px;
+  text-align: center;
+}
+
+.pad-5 {
+  padding: 5px;
+}
+
+.mar-5 {
+  margin: 5px;
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td,
+th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}

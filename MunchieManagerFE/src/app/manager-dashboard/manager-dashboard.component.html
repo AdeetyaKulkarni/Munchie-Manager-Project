@@ -1,0 +1,83 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<div class="container" style="background-color:whitesmoke; margin-top: 20px;">
+    <h1 class="m-center"> Welcome Manager {{Manager_Name}} </h1>
+
+        <div class="center">
+            <div class="center pad-5 mar-5" style="border:thin; background-color: rgb(158, 206, 166);">
+                <h4><b>Best selling item as of today :</b> {{BSI}}</h4>
+            </div>
+            <br>
+            <div class="center pad-5 mar-5" style="border:thin; background-color: rgb(221, 134, 134);">
+                <h4><b>Inventory that ran out the most today :</b> {{INVMAX}} </h4>
+            </div>
+        </div>
+
+        <br><br>
+        
+
+        <table *ngIf="!edit_mode && !register_mode">
+            
+            <button class="btn btn-success" (click)="Enable_register_mode()"> Add </button><br><br>
+
+            <tr>
+                <td>Sr.no</td>
+                <td>Name</td>
+                <td>Email</td>
+                <td>Action</td>
+            </tr>
+
+            <tr *ngFor="let emp of employee_array; index as i;">
+                <td>{{i}}</td>
+                <td>{{emp.firstname}}</td>
+                <td>{{emp.email}}</td>
+                <td>
+                    <button class="btn btn-danger" (click)= "Delete_employee(emp.id, i)">Del</button>&nbsp;
+                    <button class="btn btn-warning"(click)= "Edit_employee(emp.id, i)">Edit</button>
+                </td>
+            </tr>
+
+
+        </table>
+
+        <div class="form" name="Employee_register_form" *ngIf="register_mode && !edit_mode">
+            <div class="alert alert-danger" *ngIf="registration_error">{{registration_error}}</div>
+
+            <div class="center-form" style="border-color:lightgray; border-radius: 10px; box-shadow: 5px 5px 40px grey;">
+
+                <button class="btn btn-warning" (click)="Disable_register_mode()" >Back</button>
+                <h3 style="text-align: center;"><b style="font-family:monospace; letter-spacing: 2px;">Register<br>Employee</b></h3><br>
+
+                <input type="text" class="form-control" [(ngModel)]="employee_bean.firstname" placeholder="firstname"><br>
+                <input type="text" class="form-control" [(ngModel)]="employee_bean.lastname" placeholder="lastname"/><br>
+                <input type="text" class="form-control" [(ngModel)]="employee_bean.email" placeholder="email"><br>
+                <input type="text" class="form-control" [(ngModel)]="employee_bean.password" placeholder="password"/><br>
+                <button class="btn btn-success" (click)="Register_employee()">Register</button><br>
+
+            </div>
+        </div>
+
+        <div class="form" name="Employee_edit_form" *ngIf="edit_mode && !register_mode">
+                <div class="alert alert-danger" *ngIf="editing_error">{{editing_error}}</div>   
+                <div class="center-form" style="padding:25px !important; border-color:lightgray; border-radius: 10px; box-shadow: 5px 5px 40px grey;">
+                    
+                    <button class="btn btn-warning" (click)="Disable_edit_mode()" >Back</button>
+                    <h3 style="text-align: center;"><b style="font-family:monospace; letter-spacing: 2px;">Edit<br>Employee</b></h3><br>
+    
+                    <input type="text" class="form-control" [(ngModel)]="employee_bean.firstname" placeholder="firstname"><br>
+                    <input type="text" class="form-control" [(ngModel)]="employee_bean.lastname" placeholder="lastname"/><br>
+                    <input type="text" class="form-control" [(ngModel)]="employee_bean.email" placeholder="email"><br>
+                    <input type="text" class="form-control" [(ngModel)]="employee_bean.password" placeholder="password"/><br>
+                    <button class="btn btn-success" (click)="Register_employee()">Register</button><br>
+    
+                </div>
+            
+        </div>
+
+
+
+        <br>
+        <br>
+</div>
+
