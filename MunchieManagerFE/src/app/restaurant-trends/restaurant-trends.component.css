@@ -1,0 +1,49 @@
+.out-of-stock-title {
+    font-size: 28px;
+    align-content: center;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.mat-card-title {
+    color: black;
+}
+
+.mat-icon-button {
+    color: white !important;
+}
+
+.mat-form-field {
+    background-color: rgba(0, 0, 0, 0.8);
+    align-self: center !important;
+    color:white;
+}
+
+.mat-card-header {
+    flex-direction: column !important;
+    background-color: rgba(230, 68, 68, 0.7);
+    padding-top: 10px;
+}
+
+.mat-card {
+    background-color: rgba(230, 68, 68, 0.5) !important;
+    padding:0 !important;
+}
+
+.mat-card-content {
+  padding:5px !important;
+  color: black;
+  font-weight: bold;
+}
+
+.container {
+    padding-left: 125px !important;
+    padding-right: 125px !important;
+    padding-top: 20px !important;
+    padding-bottom: 125px;
+}
+
+.date-container {
+    text-align: -webkit-right;
+    padding-top: 10px;
+}

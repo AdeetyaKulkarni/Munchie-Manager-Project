@@ -16,22 +16,29 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { InventoryManagerComponent } from './inventory-manager/inventory-manager.component';
 import { GoodTrendsComponent } from './good-trends/good-trends.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import {MatToolbarModule} from '@angular/material/toolbar'; 
-import {MatListModule} from '@angular/material/list';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatListModule } from '@angular/material/list';
 import { RestaurantTrendsComponent } from './restaurant-trends/restaurant-trends.component';
 import { ReportingComponent } from './reporting/reporting.component';
 import { MenuCreationComponent } from './menu-creation/menu-creation.component';
 import { ChartsModule, ThemeService } from 'ng2-charts';
-
+import { MatCardModule } from '@angular/material/card';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
+<<<<<<< HEAD
 import { MatInputModule } from '@angular/material/input';
 import {MatTableModule} from '@angular/material/table';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 
 
 
+=======
+import { MatNativeDateModule } from '@angular/material';
+import { MatInputModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIcon, MatIconModule } from '@angular/material/icon';
+import { MatTableModule } from '@angular/material/table';
+>>>>>>> 65e4d5a804a01489b681dbafea53f796b3d11d68
 
 
 @NgModule({
@@ -64,7 +71,13 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatFormFieldModule,
     MatInputModule,
     MatTableModule,
+<<<<<<< HEAD
     MatCheckboxModule,
+=======
+    MatCardModule,
+    MatButtonModule,
+    MatIconModule,
+>>>>>>> 65e4d5a804a01489b681dbafea53f796b3d11d68
   ],
   providers: [
     ThemeService,

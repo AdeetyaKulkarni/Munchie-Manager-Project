@@ -14,7 +14,7 @@ public class Menu_Bean {
 	long id;
 	String name;
 	long rest_id;
-	int ingredients[];
+	long ingredients[];
 	int quantity[];
 	int price;
 	boolean visible;
@@ -22,7 +22,7 @@ public class Menu_Bean {
 	public Menu_Bean() {}
 	
 	
-	public Menu_Bean(long id, String name, long rest_id, int[] ingredients, int[] quantity, int price,
+	public Menu_Bean(long id, String name, long rest_id, long[] ingredients, int[] quantity, int price,
 			boolean visible) {
 		super();
 		this.id = id;
@@ -51,7 +51,7 @@ public class Menu_Bean {
 	}
 
 	@Column(name = "ingredients")
-	public int[] getIngredients() {
+	public long[] getIngredients() {
 		return ingredients;
 	}
 
@@ -86,7 +86,7 @@ public class Menu_Bean {
 	}
 
 
-	public void setIngredients(int[] ingredients) {
+	public void setIngredients(long[] ingredients) {
 		this.ingredients = ingredients;
 	}
 
