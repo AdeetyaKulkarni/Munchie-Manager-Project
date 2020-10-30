@@ -1,9 +1,20 @@
-.center-form {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 30px;
-  width: 50%;
+/*For regular screen*/
+@media screen and (min-width: 900px) {
+  .center-form1 {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    width: 50%;
+  }
+}
+
+/*For tablet screen */
+@media screen and (min-width: 600px) and (max-width: 899px) {
+}
+
+/* For mobile screen*/
+@media screen and (max-width: 600px) {
 }
 
 input {
@@ -21,8 +32,4 @@ input {
   margin-bottom: 12%;
   margin-left: 12%;
   margin-right: 13%;
-  
 }
-
-
-
