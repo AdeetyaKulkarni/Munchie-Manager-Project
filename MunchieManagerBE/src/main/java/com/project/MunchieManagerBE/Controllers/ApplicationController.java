@@ -230,9 +230,9 @@ public class ApplicationController {
 			}
 			
 			inv.setAmount(oldItem.getAmount() - inv.getAmount());
+			invRepo.save(inv);
 		}
 		
-		invRepo.save(inv);
 		return true;
 	}
 }
