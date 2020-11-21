@@ -23,7 +23,7 @@ export class LoginPageComponent implements OnInit {
   { 
     let loginstr = this.email+","+this.password
     console.log(loginstr)
-    this.service.LoginService("e,e").subscribe(
+    this.service.LoginService(loginstr).subscribe(
       response => {
           // Change navigation according to the privilage
           if(response == true){this.router.navigate([""])}
