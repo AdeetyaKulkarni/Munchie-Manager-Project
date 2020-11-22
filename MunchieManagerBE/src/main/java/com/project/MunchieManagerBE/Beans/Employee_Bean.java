@@ -22,9 +22,7 @@ public class Employee_Bean {
 	int privilege;
 	
 	
-	public void Employee_Bean() {}
-
-
+	public Employee_Bean() {}
 	
 
 	public Employee_Bean(long id, String firstname, String lastname, String email, String username, String password,

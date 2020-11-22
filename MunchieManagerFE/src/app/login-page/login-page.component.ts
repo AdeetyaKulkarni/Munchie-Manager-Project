@@ -26,7 +26,10 @@ export class LoginPageComponent implements OnInit {
     this.service.LoginService(loginstr).subscribe(
       response => {
           // Change navigation according to the privilage
-          if(response == true){this.router.navigate([""])}
+          if(response){
+            console.log(response);
+            //this.router.navigate([""])
+          }
           else{this.login_error="User does not exist - please register first"}
       },
       error => {alert("Error 500 - connection timed out")}

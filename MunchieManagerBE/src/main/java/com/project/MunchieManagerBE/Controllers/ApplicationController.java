@@ -175,11 +175,6 @@ public class ApplicationController {
 		
 		String info1[] = info.split(",");
 		Employee_Bean result = regRepo.EmpLogin(info1[0], info1[1]);
-//		if  (result.size() == 0) {
-//			result = regRepo.CustLogin(info1[0], info1[1]);
-//		}
-//		//return result;
-//		return !(result.size() == 0);
 		return result;
 	}
 	

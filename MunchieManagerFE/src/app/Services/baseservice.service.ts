@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Employee_Bean } from '../main-page/main-page.component';
 
 @Injectable({
   providedIn: 'root'
@@ -37,7 +38,7 @@ export class BaseserviceService {
     LoginService(loginstr){
 
       let url = "http://localhost:8080/login"
-      return this.http.post<boolean>(url, loginstr)
+      return this.http.post<any>(url, loginstr)
 
     }
 
