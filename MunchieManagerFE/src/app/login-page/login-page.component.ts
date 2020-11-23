@@ -39,6 +39,7 @@ export class LoginPageComponent implements OnInit {
             }
             else{
               //CUSTOMER
+              this.router.navigate(["customer-dashboard"]);
             }
           }
           else{this.login_error="User does not exist - please register first"}

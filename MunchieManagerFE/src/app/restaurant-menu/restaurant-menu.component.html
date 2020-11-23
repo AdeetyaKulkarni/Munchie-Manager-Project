@@ -1,5 +1,7 @@
 <div class="container">
-    
+    <br>
+    <h1 class="heading" style="text-align: center;">MENU ITEMS</h1>
+    <br><br>
     <table>
         <tr>
           <th>Name</th>
@@ -8,12 +10,11 @@
         </tr>
 
 
-        <tr *ngFor="let item of rest_menu">
+        <tr *ngFor="let item of menu_items">
           <td>{{item.name}}</td>
-          <td>{{item.amount}}</td>
+          <td>{{item.price}}</td>
           <td>
-              <button class="btn btn-secondary" (click)="Increment(good)">+</button>&nbsp;
-              <button class="btn btn-secondary" (click)="Decrement(good)">-</button>
+              <button class="btn btn-success" (click)="AddToCart(item)">Add to Order</button>&nbsp;
           </td>
         </tr>
         

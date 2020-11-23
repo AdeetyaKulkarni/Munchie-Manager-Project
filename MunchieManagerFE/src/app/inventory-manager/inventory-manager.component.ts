@@ -28,7 +28,7 @@ export class InventoryManagerComponent implements OnInit {
     this.cur_rest_id = localStorage.getItem("user_id");
     this.service.GetRestInventory(this.cur_rest_id).subscribe(
       response => {
-         this.rest_goods = response;
+         this.rest_goods = response.sort();
       },
       error => {alert("BAD API")}
     )
