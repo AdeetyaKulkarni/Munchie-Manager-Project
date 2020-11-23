@@ -16,12 +16,14 @@ import com.project.MunchieManagerBE.Beans.Customer_Bean;
 import com.project.MunchieManagerBE.Beans.Employee_Bean;
 import com.project.MunchieManagerBE.Beans.Inventory_Bean;
 import com.project.MunchieManagerBE.Beans.Menu_Bean;
-import com.project.MunchieManagerBE.DBRepos.CustomerRegistrationRepo;
+import com.project.MunchieManagerBE.DBRepos.CustomerRepo;
 import com.project.MunchieManagerBE.DBRepos.EmployeeRepo;
 import com.project.MunchieManagerBE.DBRepos.InventoryRepo;
 import com.project.MunchieManagerBE.DBRepos.MenuRepo;
 import com.project.MunchieManagerBE.DBRepos.RegistrationRepo;
 import com.project.MunchieManagerBE.DBRepos.TestRepo;
+
+import net.minidev.json.JSONObject;
 
 // Required in every controller file | If not included will result in CORS error in Angular.
 @CrossOrigin(origins="http://localhost:4200", allowCredentials="true")
@@ -33,7 +35,7 @@ public class ApplicationController {
 	private RegistrationRepo regRepo;
 	
 	@Autowired
-	private CustomerRegistrationRepo custRegRepo;
+	private CustomerRepo custRepo;
 	
 	@Autowired
 	private MenuRepo menuRepo;
@@ -64,23 +66,125 @@ public class ApplicationController {
 	}
 
 	
+	// -----------------LOGIN API---------------------------------//
+	
+	@PostMapping(path="/login")
+	public JSONObject Login(@RequestBody String info) {
+		
+		JSONObject obj = new JSONObject();
+		
+		String info1[] = info.split(",");
+		
+		Employee_Bean result = regRepo.EmpLogin(info1[0], info1[1]);
+		
+		if(result == null) {
+			Customer_Bean result1 = custRepo.CustLogin(info1[0], info1[1]); 
+			if(result1 == null) {
+				return null;
+			}
+			else {
+				obj.put("id", result1.getId());
+				obj.put("firstname", result1.getFirstname());
+				obj.put("privilege", result1.getprivilege());
+				return obj;
+			}
+		}
+		else {
+				obj.put("id", result.getId());
+				obj.put("firstname", result.getFirstname());
+				obj.put("privilege", result.getprivilege());
+				return obj;
+		}
+		
+		
+	}
+	
+	
+	// --------------------Employee API's--------------------------- //
+	
+	@PostMapping(path="/employeeregister")
+	public Employee_Bean EmployeeRegister(@RequestBody Employee_Bean employeeBean) {
+		
+		regRepo.save(employeeBean);
+		
+		return employeeBean;
+	}
+	
+	@PostMapping(path="/update_employee")
+	public boolean updateEmployee(@RequestBody Employee_Bean emp) {
+		empRepo.delete(emp);
+		empRepo.save(emp);
+		
+		return true;
+	}
+	
+	@DeleteMapping(path="/delete_employee") //true if deleted, false if employee doesn't exist
+	public boolean deleteEmployee(@RequestParam long empID) {
+		Employee_Bean emp = empRepo.getEmployeeByID(empID);
+		if(emp != null){
+			empRepo.deleteById(empID);
+			return true;
+		}
+		return false;
+	}
+	
+	@GetMapping(path="/retrieve_all_employees")
+	public List<Employee_Bean> getAllRestEmployees(@RequestParam int restID){
+		String ID = Integer.toString(restID);
+		return empRepo.getRestaurantEmployees(ID);
+	}
+	
+	
 	// --------------------Customer API's------------------------- //
 	
 	@PostMapping(path="/customerregister")
 	public boolean CustomerRegister(@RequestBody Customer_Bean customerBean) {
 		
-		custRegRepo.save(customerBean);
+		custRepo.save(customerBean);
 		
 		return true;
 	}
 	
-	@PostMapping(path="/login")
-	public Employee_Bean Login(@RequestBody String info) {
+	
+	//--------------------Inventory API's-----------------------------//
+	
+	@PostMapping(path="/addInvItem")
+	public void addInv(@RequestBody Inventory_Bean inv) {
+		//get existing item entry for item, if any
+		Inventory_Bean oldItem = invRepo.getSpecificItem(inv.getRest_id(), inv.getName());
 		
-		String info1[] = info.split(",");
-		Employee_Bean result = regRepo.EmpLogin(info1[0], info1[1]);
-		return result;
+		if(oldItem != null) {
+			inv.setAmount(inv.getAmount() + oldItem.getAmount());
+		}
+		
+		invRepo.save(inv);
 	}
+	
+	@PostMapping(path="/removeInvItem")
+	public boolean remInv(@RequestBody Inventory_Bean inv) { //returns true if there are any items left
+		//get existing item entry for item, if any
+		Inventory_Bean oldItem = invRepo.getSpecificItem(inv.getRest_id(), inv.getName());
+		
+		if(oldItem != null) {
+			int n1 = oldItem.getAmount() - inv.getAmount();
+			if(n1 < 1) { //if items depleted, delete it from the db and quit this method
+				invRepo.delete(oldItem);
+				return false;
+			}
+			
+			inv.setAmount(oldItem.getAmount() - inv.getAmount());
+			invRepo.save(inv);
+			return true;
+		}
+		
+		return false;
+	}
+
+	@GetMapping(path="/getRestInv")
+	public List<Inventory_Bean> getRestInv(@RequestParam long restID){
+		return invRepo.getRestInventory(restID);
+	}
+	
 	
 
 	// -------------------- Menu API's------------------------- //
@@ -153,81 +257,6 @@ public class ApplicationController {
 		return available;
 	}
 	
-	
-	//--------------------Inventory API's-----------------------------//
-	
-	@PostMapping(path="/addInvItem")
-	public void addInv(@RequestBody Inventory_Bean inv) {
-		//get existing item entry for item, if any
-		Inventory_Bean oldItem = invRepo.getSpecificItem(inv.getRest_id(), inv.getName());
-		
-		if(oldItem != null) {
-			inv.setAmount(inv.getAmount() + oldItem.getAmount());
-		}
-		
-		invRepo.save(inv);
-	}
-	
-	@PostMapping(path="/removeInvItem")
-	public boolean remInv(@RequestBody Inventory_Bean inv) { //returns true if there are any items left
-		//get existing item entry for item, if any
-		Inventory_Bean oldItem = invRepo.getSpecificItem(inv.getRest_id(), inv.getName());
-		
-		if(oldItem != null) {
-			int n1 = oldItem.getAmount() - inv.getAmount();
-			if(n1 < 1) { //if items depleted, delete it from the db and quit this method
-				invRepo.delete(oldItem);
-				return false;
-			}
-			
-			inv.setAmount(oldItem.getAmount() - inv.getAmount());
-			invRepo.save(inv);
-			return true;
-		}
-		
-		return false;
-	}
-
-	@GetMapping(path="/getRestInv")
-	public List<Inventory_Bean> getRestInv(@RequestParam long restID){
-		return invRepo.getRestInventory(restID);
-	}
-	
-	
-	
-	// --------------------Employee API's--------------------------- //
-	
-	@PostMapping(path="/employeeregister")
-	public Employee_Bean EmployeeRegister(@RequestBody Employee_Bean employeeBean) {
-		
-		regRepo.save(employeeBean);
-		
-		return employeeBean;
-	}
-	
-	@PostMapping(path="/update_employee")
-	public boolean updateEmployee(@RequestBody Employee_Bean emp) {
-		empRepo.delete(emp);
-		empRepo.save(emp);
-		
-		return true;
-	}
-	
-	@DeleteMapping(path="/delete_employee") //true if deleted, false if employee doesn't exist
-	public boolean deleteEmployee(@RequestParam long empID) {
-		Employee_Bean emp = empRepo.getEmployeeByID(empID);
-		if(emp != null){
-			empRepo.deleteById(empID);
-			return true;
-		}
-		return false;
-	}
-	
-	@GetMapping(path="/retrieve_all_employees")
-	public List<Employee_Bean> getAllRestEmployees(@RequestParam int restID){
-		String ID = Integer.toString(restID);
-		return empRepo.getRestaurantEmployees(ID);
-	}
 	
 	
 

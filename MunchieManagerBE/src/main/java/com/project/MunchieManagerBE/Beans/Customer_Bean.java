@@ -20,11 +20,8 @@ public class Customer_Bean {
 	int privilege;
 	
 	
-	public void Customer_Bean() {}
-
-
+	public Customer_Bean() {}
 	
-
 	public Customer_Bean(long id, String firstname, String lastname, String email, String username, String password, int privilege) {
 		super();
 		this.id = id;

@@ -12,9 +12,6 @@ import com.project.MunchieManagerBE.Beans.Name;
 public interface RegistrationRepo extends JpaRepository<Employee_Bean, Long> {
 	
 	@Query(value = "SELECT * FROM employee WHERE email=?1 and password=?2", nativeQuery = true)
-	Employee_Bean EmpLogin(String email, String password);
-	
-	@Query(value = "SELECT * FROM customer WHERE email=?1 and password=?2", nativeQuery = true)
-	Customer_Bean CustLogin(String email, String password);
+	Employee_Bean EmpLogin(String email, String password);	
 	
 }

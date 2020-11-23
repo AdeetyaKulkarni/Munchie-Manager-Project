@@ -8,6 +8,8 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 })
 export class InventoryManagerComponent implements OnInit {
 
+  rest_goods = [1,2,3,4]
+
   constructor() { }
 
   ngOnInit() {
