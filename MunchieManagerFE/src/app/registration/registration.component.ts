@@ -43,10 +43,8 @@ export class RegistrationComponent implements OnInit {
         console.log(this.employee_bean)
         this.service.RegisterEmployee(this.employee_bean).subscribe(
             response => {
-                // This should be changed to route to manager dashboard
-                console.log("Response",response)
-                if(response == true){this.router.navigate([""])}
-                else{this.login_error = "Some error occured please register again"}
+                console.log(response)
+                this.router.navigate(["login"])
             },
             error => {alert("Error 500 - Backend connection expired")}
         )
@@ -59,8 +57,7 @@ export class RegistrationComponent implements OnInit {
           response => {
               // This should be changed to route to customer menu
               console.log(response)
-              if(response == true){this.router.navigate([""])}
-              else{this.login_error = "Some error occured please register again"}
+              this.router.navigate(["login"])
           },
           error => {alert("Error 500 - Backend connection expired")}
         )

@@ -38,10 +38,9 @@ export class BaseserviceService {
     LoginService(loginstr){
 
       let url = "http://localhost:8080/login"
-      return this.http.post<any>(url, loginstr)
+      return this.http.post<Employee_Bean>(url, loginstr)
 
     }
-
 
     RegisterEmployee(employee_bean)
     {
@@ -59,4 +58,24 @@ export class BaseserviceService {
 
     //--------------------------------------------------------------------------------------------
 
+    GetEmployeesAtRestaurant(id){
+
+      //id is the id of the manager
+      let url = "http://localhost:8080/retrieve_all_employees?restID=" + id 
+      return this.http.get<any>(url)
+    }
+
+    UpdateEmployee(employee_bean){
+      let url = "http://localhost:8080/update_employee"
+      return this.http.post<any>(url, employee_bean);
+    }
+
+    DeleteEmployee(emp_id){
+      let url = "http://localhost:8080/delete_employee?empID="+emp_id
+      return this.http.delete<any>(url)
+
+    }
 }
+
+
+

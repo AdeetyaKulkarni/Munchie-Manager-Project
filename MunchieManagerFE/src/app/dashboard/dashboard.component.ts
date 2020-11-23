@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -23,9 +24,14 @@ export class DashboardComponent implements OnInit {
     { path: "menu-creation", label: 'Menu Creation' },
   ];
 
-  constructor() { }
+  constructor(private router : Router ) { }
 
   ngOnInit() {
+  }
+
+  Logout(){
+    localStorage.clear();
+    this.router.navigate(["login"])
   }
 
 }

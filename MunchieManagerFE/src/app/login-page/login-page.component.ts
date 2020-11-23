@@ -28,7 +28,18 @@ export class LoginPageComponent implements OnInit {
           // Change navigation according to the privilage
           if(response){
             console.log(response);
-            //this.router.navigate([""])
+            let privilege = response["privilege"];
+            localStorage.setItem('user_privilege', privilege);
+            localStorage.setItem('login-status', '1');
+            localStorage.setItem('username', response["firstname"]);
+            localStorage.setItem('user_id', response["id"]);
+            if(privilege <= 1){
+              //EMPLOYEE
+              this.router.navigate(["dashboard/manager-dashboard"]);
+            }
+            else{
+              //CUSTOMER
+            }
           }
           else{this.login_error="User does not exist - please register first"}
       },

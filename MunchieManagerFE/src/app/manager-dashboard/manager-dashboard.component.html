@@ -2,7 +2,8 @@
 
 
 <div class="container" style="background-color:whitesmoke; margin-top: 20px;">
-    <h1 class="m-center"> Welcome Manager {{Manager_Name}} </h1>
+    <h1 class="m-center" *ngIf="manager_privilege"> Welcome Manager {{username}} </h1>
+    <h1 class="m-center" *ngIf="!manager_privilege"> Welcome Employee {{username}} </h1>
 
         <div class="center">
             <div class="center pad-5 mar-5" style="border:thin; background-color: rgb(158, 206, 166);">
@@ -17,7 +18,7 @@
         <br><br>
         
 
-        <table *ngIf="!edit_mode && !register_mode">
+        <table *ngIf="!edit_mode && !register_mode && manager_privilege">
             
             <button class="btn btn-success" (click)="Enable_register_mode()"> Add </button><br><br>
 
@@ -41,7 +42,7 @@
 
         </table>
 
-        <div class="form" name="Employee_register_form" *ngIf="register_mode && !edit_mode">
+        <div class="form" name="Employee_register_form" *ngIf="register_mode && !edit_mode && manager_privilege">
             <div class="alert alert-danger" *ngIf="registration_error">{{registration_error}}</div>
 
             <div class="center-form" style="border-color:lightgray; border-radius: 10px; box-shadow: 5px 5px 40px grey;">
@@ -58,7 +59,7 @@
             </div>
         </div>
 
-        <div class="form" name="Employee_edit_form" *ngIf="edit_mode && !register_mode">
+        <div class="form" name="Employee_edit_form" *ngIf="edit_mode && !register_mode && manager_privilege">
                 <div class="alert alert-danger" *ngIf="editing_error">{{editing_error}}</div>   
                 <div class="center-form" style="padding:25px !important; border-color:lightgray; border-radius: 10px; box-shadow: 5px 5px 40px grey;">
                     
@@ -69,7 +70,7 @@
                     <input type="text" class="form-control" [(ngModel)]="employee_bean.lastname" placeholder="lastname"/><br>
                     <input type="text" class="form-control" [(ngModel)]="employee_bean.email" placeholder="email"><br>
                     <input type="text" class="form-control" [(ngModel)]="employee_bean.password" placeholder="password"/><br>
-                    <button class="btn btn-success" (click)="Register_employee()">Register</button><br>
+                    <button class="btn btn-success" (click)="Register_employee()">Update</button><br>
     
                 </div>
             

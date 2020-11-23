@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -77,10 +78,11 @@ public class ApplicationController {
 	
 	@GetMapping(path="/retrieve_all_employees")
 	public List<Employee_Bean> getAllRestEmployees(@RequestParam int restID){
-		return empRepo.getRestaurantEmployees(restID);
+		String ID = Integer.toString(restID);
+		return empRepo.getRestaurantEmployees(ID);
 	}
 	
-	@GetMapping(path="/delete_employee") //true if deleted, false if employee doesn't exist
+	@DeleteMapping(path="/delete_employee") //true if deleted, false if employee doesn't exist
 	public boolean deleteEmployee(@RequestParam long empID) {
 		Employee_Bean emp = empRepo.getEmployeeByID(empID);
 		if(emp != null){
@@ -183,13 +185,6 @@ public class ApplicationController {
 		menuRepo.save(menu);
 		
 		return true; //why do we need this?
-	}
-	
-	@PostMapping(path="/add_employee")
-	public boolean addEmployee(@RequestBody Employee_Bean emp) {
-		empRepo.save(emp);
-		
-		return true;
 	}
 	
 	@PostMapping(path="/update_employee")
