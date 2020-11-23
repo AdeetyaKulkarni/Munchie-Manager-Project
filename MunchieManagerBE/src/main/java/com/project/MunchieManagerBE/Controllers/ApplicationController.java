@@ -44,19 +44,16 @@ public class ApplicationController {
 	@Autowired
 	private InventoryRepo invRepo;
 	
+	@Autowired
+	private TestRepo repo;
 	
-	// ------------------BASIC METHODS---------------------------- //
+	// -----------------TEST METHODS------------------------------ //
 	
 	@GetMapping(path="/test")
 	public String getTest() 
 	{
 		return "API's are working! CHANGED";
 	} 
-
-	
-	// To use repository method you have to Autowire it in the controller
-	@Autowired
-	private TestRepo repo;
 	
 	@GetMapping(path="/checkdb")
 	public String getName()
@@ -64,6 +61,35 @@ public class ApplicationController {
 		// Using the repo method here
 		return repo.FindAllNames().get(0);
 		
+	}
+
+	
+	// --------------------Customer API's------------------------- //
+	
+	@PostMapping(path="/customerregister")
+	public boolean CustomerRegister(@RequestBody Customer_Bean customerBean) {
+		
+		custRegRepo.save(customerBean);
+		
+		return true;
+	}
+	
+	@PostMapping(path="/login")
+	public Employee_Bean Login(@RequestBody String info) {
+		
+		String info1[] = info.split(",");
+		Employee_Bean result = regRepo.EmpLogin(info1[0], info1[1]);
+		return result;
+	}
+	
+
+	// -------------------- Menu API's------------------------- //
+	
+	@PostMapping(path="/newMenuItem")
+	public boolean newMenuItem(@RequestBody Menu_Bean menu) {
+		menuRepo.save(menu);
+		
+		return true;
 	}
 	
 	@GetMapping(path="/getAllMenu")
@@ -75,28 +101,7 @@ public class ApplicationController {
 	public List<Menu_Bean> getRestMenu(@RequestParam int restID){
 		return menuRepo.restMenu(restID);
 	}
-	
-	@GetMapping(path="/retrieve_all_employees")
-	public List<Employee_Bean> getAllRestEmployees(@RequestParam int restID){
-		String ID = Integer.toString(restID);
-		return empRepo.getRestaurantEmployees(ID);
-	}
-	
-	@DeleteMapping(path="/delete_employee") //true if deleted, false if employee doesn't exist
-	public boolean deleteEmployee(@RequestParam long empID) {
-		Employee_Bean emp = empRepo.getEmployeeByID(empID);
-		if(emp != null){
-			empRepo.deleteById(empID);
-			return true;
-		}
-		return false;
-	}
-	
-	@GetMapping(path="/getRestInv")
-	public List<Inventory_Bean> getRestInv(@RequestParam long restID){
-		return invRepo.getRestInventory(restID);
-	}
-	
+
 	@GetMapping(path="/getAvail")
 	public List<Menu_Bean> getAvailableMenuItems(@RequestParam long restID){
 		List<Menu_Bean> items = menuRepo.restMenu(restID);
@@ -149,51 +154,7 @@ public class ApplicationController {
 	}
 	
 	
-	// ---------------------------------------------------------- //
-	
-	
-	
-	
-	// -----------------Registering Methods---------------------- //
-	
-	@PostMapping(path="/employeeregister")
-	public Employee_Bean EmployeeRegister(@RequestBody Employee_Bean employeeBean) {
-		
-		regRepo.save(employeeBean);
-		
-		return employeeBean;
-	}
-	
-	@PostMapping(path="/customerregister")
-	public boolean CustomerRegister(@RequestBody Customer_Bean customerBean) {
-		
-		custRegRepo.save(customerBean);
-		
-		return true;
-	}
-	
-	@PostMapping(path="/login")
-	public Employee_Bean Login(@RequestBody String info) {
-		
-		String info1[] = info.split(",");
-		Employee_Bean result = regRepo.EmpLogin(info1[0], info1[1]);
-		return result;
-	}
-	
-	@PostMapping(path="/newMenuItem")
-	public boolean newMenuItem(@RequestBody Menu_Bean menu) {
-		menuRepo.save(menu);
-		
-		return true; //why do we need this?
-	}
-	
-	@PostMapping(path="/update_employee")
-	public boolean updateEmployee(@RequestBody Employee_Bean emp) {
-		empRepo.delete(emp);
-		empRepo.save(emp);
-		
-		return true;
-	}
+	//--------------------Inventory API's-----------------------------//
 	
 	@PostMapping(path="/addInvItem")
 	public void addInv(@RequestBody Inventory_Bean inv) {
@@ -226,4 +187,50 @@ public class ApplicationController {
 		
 		return false;
 	}
+
+	@GetMapping(path="/getRestInv")
+	public List<Inventory_Bean> getRestInv(@RequestParam long restID){
+		return invRepo.getRestInventory(restID);
+	}
+	
+	
+	
+	// --------------------Employee API's--------------------------- //
+	
+	@PostMapping(path="/employeeregister")
+	public Employee_Bean EmployeeRegister(@RequestBody Employee_Bean employeeBean) {
+		
+		regRepo.save(employeeBean);
+		
+		return employeeBean;
+	}
+	
+	@PostMapping(path="/update_employee")
+	public boolean updateEmployee(@RequestBody Employee_Bean emp) {
+		empRepo.delete(emp);
+		empRepo.save(emp);
+		
+		return true;
+	}
+	
+	@DeleteMapping(path="/delete_employee") //true if deleted, false if employee doesn't exist
+	public boolean deleteEmployee(@RequestParam long empID) {
+		Employee_Bean emp = empRepo.getEmployeeByID(empID);
+		if(emp != null){
+			empRepo.deleteById(empID);
+			return true;
+		}
+		return false;
+	}
+	
+	@GetMapping(path="/retrieve_all_employees")
+	public List<Employee_Bean> getAllRestEmployees(@RequestParam int restID){
+		String ID = Integer.toString(restID);
+		return empRepo.getRestaurantEmployees(ID);
+	}
+	
+	
+
+
+
 }
