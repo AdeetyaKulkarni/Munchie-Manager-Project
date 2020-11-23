@@ -155,6 +155,7 @@ public class ApplicationController {
 		
 		if(oldItem != null) {
 			inv.setAmount(inv.getAmount() + oldItem.getAmount());
+			invRepo.delete(oldItem);
 		}
 		
 		invRepo.save(inv);
