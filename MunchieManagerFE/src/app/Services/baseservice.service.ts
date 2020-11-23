@@ -94,7 +94,23 @@ export class BaseserviceService {
       return this.http.get<Inventory_Bean[]>(url);
 
     }
-    
+
+
+    //------------------------------Restaurant API Calls--------------------------------------------------
+
+    GetAllRestaurants(){
+      let url = "http://localhost:8080/GetAllRestaurants"
+      return this.http.get<any>(url);
+
+    }
+
+    //------------------------------Menu API Calls--------------------------------------------------
+
+    GetAvailableMenuItems(id){
+      let url = "http://localhost:8080/getAvail?restID="+id
+      return this.http.get<any>(url)
+    }
+
 }
 
 

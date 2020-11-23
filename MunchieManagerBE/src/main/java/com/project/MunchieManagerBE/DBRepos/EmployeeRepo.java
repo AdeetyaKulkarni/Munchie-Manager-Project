@@ -14,4 +14,8 @@ public interface EmployeeRepo extends JpaRepository<Employee_Bean, Long> {
 	
 	@Query(value="SELECT * FROM employee WHERE id = ?1", nativeQuery = true)
 	Employee_Bean getEmployeeByID(long ID);
+	
+	@Query(value="SELECT * FROM employee WHERE privilege=0", nativeQuery = true)
+	List<Employee_Bean> getAllRestaurants();
+
 }

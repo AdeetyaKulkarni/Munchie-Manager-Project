@@ -1,0 +1,24 @@
+<div class="container">
+    
+    <table>
+        <tr>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Action</th>
+        </tr>
+
+
+        <tr *ngFor="let item of rest_menu">
+          <td>{{item.name}}</td>
+          <td>{{item.amount}}</td>
+          <td>
+              <button class="btn btn-secondary" (click)="Increment(good)">+</button>&nbsp;
+              <button class="btn btn-secondary" (click)="Decrement(good)">-</button>
+          </td>
+        </tr>
+        
+      </table>
+
+</div>
+
+

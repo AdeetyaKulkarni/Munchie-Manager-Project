@@ -32,6 +32,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatNativeDateModule } from '@angular/material';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIcon, MatIconModule } from '@angular/material/icon';
+import { CustomerDasboardComponent } from './customer-dasboard/customer-dasboard.component';
+import { RestaurantMenuComponent } from './restaurant-menu/restaurant-menu.component';
 
 
 @NgModule({
@@ -48,6 +50,8 @@ import { MatIcon, MatIconModule } from '@angular/material/icon';
     RestaurantTrendsComponent,
     ReportingComponent,
     MenuCreationComponent,
+    CustomerDasboardComponent,
+    RestaurantMenuComponent,
   ],
   imports: [
     BrowserModule,

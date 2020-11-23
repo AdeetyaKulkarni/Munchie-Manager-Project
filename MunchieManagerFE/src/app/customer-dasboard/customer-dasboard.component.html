@@ -1,0 +1,19 @@
+<div class="container" style="align-items: center; margin-top: 50;">
+
+    <div class="jumbotron" style="text-align: center;">
+        <h1 class="">Welcome {{username}}</h1>
+        <p>Please search for your restaurant</p>
+       <div class="searchbar">
+      <div class="bar">
+          <input class="input-group input-group-lg" type="text" #searchbar [(ngModel)]="searchInput" (keyup)="fetchSeries($event)" placeholder="Enter the name of your restaurant" />
+       </div>
+       <br><br>
+    <ul>
+      <button class="btn btn-lg" (click)="Navigate(rest)" *ngFor="let rest of searchResult">
+        {{ rest.restaurant_name }}     
+      </button>
+    </ul>
+  </div>
+
+
+</div>

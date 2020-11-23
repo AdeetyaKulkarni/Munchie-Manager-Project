@@ -134,6 +134,22 @@ public class ApplicationController {
 		return empRepo.getRestaurantEmployees(ID);
 	}
 	
+	@GetMapping(path="/GetAllRestaurants")
+	public List<JSONObject> GetAllRestaurants() {
+		List<Employee_Bean> arr;
+		arr = empRepo.getAllRestaurants();
+		ArrayList<JSONObject> jsonarr = new ArrayList<JSONObject>();
+		
+		for(int i=0; i< arr.size(); i++) {
+			JSONObject obj = new JSONObject();
+			obj.put("restaurant_name", arr.get(i).getRestaurant_name());
+			obj.put("restaurant_id", arr.get(i).getId());
+			jsonarr.add(obj);
+		}	
+		
+		return jsonarr;
+		
+	}
 	
 	// --------------------Customer API's------------------------- //
 	
@@ -154,11 +170,14 @@ public class ApplicationController {
 		Inventory_Bean oldItem = invRepo.getSpecificItem(inv.getRest_id(), inv.getName());
 		
 		if(oldItem != null) {
-			inv.setAmount(inv.getAmount() + oldItem.getAmount());
-			invRepo.delete(oldItem);
+			oldItem.setAmount(inv.getAmount() + oldItem.getAmount());
+			invRepo.save(oldItem);
+		}
+		else {
+			invRepo.save(inv);
 		}
 		
-		invRepo.save(inv);
+		
 	}
 	
 	@PostMapping(path="/removeInvItem")
@@ -174,9 +193,8 @@ public class ApplicationController {
 				return false;
 			}
 			
-			inv.setAmount(oldItem.getAmount() - inv.getAmount());
-			invRepo.delete(oldItem);
-			invRepo.save(inv);
+			oldItem.setAmount(oldItem.getAmount() - inv.getAmount());
+			invRepo.save(oldItem);
 			return true;
 		}
 		
@@ -210,6 +228,7 @@ public class ApplicationController {
 		return menuRepo.restMenu(restID);
 	}
 
+	
 	@GetMapping(path="/getAvail")
 	public List<Menu_Bean> getAvailableMenuItems(@RequestParam long restID){
 		List<Menu_Bean> items = menuRepo.restMenu(restID);
