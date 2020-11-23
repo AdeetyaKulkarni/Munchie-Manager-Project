@@ -1,5 +1,13 @@
+.center-form {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  padding: 25px !important;
+}
+
 table {
-  margin-top: 50px;
+  margin-top: 10px;
   font-family: arial, sans-serif;
   border-collapse: collapse;
   width: 100%;

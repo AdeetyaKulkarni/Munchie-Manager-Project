@@ -163,6 +163,7 @@ public class ApplicationController {
 	
 	@PostMapping(path="/removeInvItem")
 	public boolean remInv(@RequestBody Inventory_Bean inv) { //returns true if there are any items left
+
 		//get existing item entry for item, if any
 		Inventory_Bean oldItem = invRepo.getSpecificItem(inv.getRest_id(), inv.getName());
 		
@@ -174,12 +175,14 @@ public class ApplicationController {
 			}
 			
 			inv.setAmount(oldItem.getAmount() - inv.getAmount());
+			invRepo.delete(oldItem);
 			invRepo.save(inv);
 			return true;
 		}
 		
 		return false;
 	}
+	
 
 	@GetMapping(path="/getRestInv")
 	public List<Inventory_Bean> getRestInv(@RequestParam long restID){

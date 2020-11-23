@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Employee_Bean } from '../main-page/main-page.component';
+import { Employee_Bean, Inventory_Bean } from '../main-page/main-page.component';
 
 @Injectable({
   providedIn: 'root'
@@ -32,13 +32,13 @@ export class BaseserviceService {
     }
 
 
-    //---------------------REGISTRATION SERVICES ONLY-------------------------------------------
+    //---------------------REGISTRATION/LOGIN API Calls-------------------------------------------
 
 
     LoginService(loginstr){
 
       let url = "http://localhost:8080/login"
-      return this.http.post<Employee_Bean>(url, loginstr)
+      return this.http.post<any>(url, loginstr)
 
     }
 
@@ -56,7 +56,7 @@ export class BaseserviceService {
 
     }
 
-    //--------------------------------------------------------------------------------------------
+    //------------------------------Employee API Calls--------------------------------------------------
 
     GetEmployeesAtRestaurant(id){
 
@@ -75,6 +75,26 @@ export class BaseserviceService {
       return this.http.delete<any>(url)
 
     }
+
+    //------------------------------Inventory API Calls--------------------------------------------------
+
+    AddInventory(good){
+      let url = "http://localhost:8080/addInvItem"
+      return this.http.post<any>(url, good);
+    }
+
+    DeleteInventory(good){
+      let url = "http://localhost:8080/removeInvItem"
+      return this.http.post<any>(url, good);
+    }
+
+    GetRestInventory(id){
+
+      let url = "http://localhost:8080/getRestInv?restID="+id
+      return this.http.get<Inventory_Bean[]>(url);
+
+    }
+    
 }
 
 

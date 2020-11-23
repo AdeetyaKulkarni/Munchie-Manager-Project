@@ -1,4 +1,11 @@
-<div class="container">
+<div class="container" style="margin-top: 30px; padding: 30px;">
+
+<div class="center" *ngIf="!addmode && !removemode">
+
+    <div style="margin-top: 50px;">
+    <button class="btn btn-success" (click)="AddBulk()">Add</button>&nbsp;
+    <button class="btn btn-danger" (click)="RemoveBulk()">Remove</button>&nbsp;
+    </div>
 
     <table>
         <tr>
@@ -9,9 +16,12 @@
 
 
         <tr *ngFor="let good of rest_goods">
-          <td>AA</td>
-          <td>Maria Anders</td>
-          <td>Germany</td>
+          <td>{{good.name}}</td>
+          <td>{{good.amount}}</td>
+          <td>
+              <button class="btn btn-secondary" (click)="Increment(good)">+</button>&nbsp;
+              <button class="btn btn-secondary" (click)="Decrement(good)">-</button>
+          </td>
         </tr>
         
       </table>
@@ -19,5 +29,35 @@
 
     <!-- < > {{link.label}}
     </a>  -->
+
+</div>
+
+<div class="form" name="Add_inventory_form" *ngIf="addmode && !removemode">
+    
+    <div class="center-form" style="border-color:lightgray; border-radius: 10px; box-shadow: 5px 5px 40px grey;">
+
+        <button class="btn btn-warning" (click)="end_addmode()" >Back</button>
+        <h3 style="text-align: center;"><b style="font-family:monospace; letter-spacing: 2px;">Add<br>Inventory</b></h3><br>
+
+        <input type="text" class="form-control" [(ngModel)]="inventory_bean.name" placeholder="name"><br>
+        <input type="text" class="form-control" [(ngModel)]="inventory_bean.amount" placeholder="amount"/><br>
+        <button class="btn btn-success" (click)="IncrementBulk()">Add</button><br>
+
+    </div>
+</div>
+
+<div class="form" name="Remove_inventory_form" *ngIf="!addmode && removemode">
+    
+    <div class="center-form" style="border-color:lightgray; border-radius: 10px; box-shadow: 5px 5px 40px grey;">
+
+        <button class="btn btn-warning" (click)="end_addmode()" >Back</button>
+        <h3 style="text-align: center;"><b style="font-family:monospace; letter-spacing: 2px;">Remove<br>Inventory</b></h3><br>
+
+        <input type="text" class="form-control" [(ngModel)]="inventory_bean.name" placeholder="name"><br>
+        <input type="text" class="form-control" [(ngModel)]="inventory_bean.amount" placeholder="amount"/><br>
+        <button class="btn btn-success" (click)="DecrementBulk()">Remove</button><br>
+
+    </div>
+</div>
 
 </div>

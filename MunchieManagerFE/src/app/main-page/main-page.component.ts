@@ -25,6 +25,12 @@ export class Customer_Bean{constructor(
   privilege:number
 ){}}
 
+export class Inventory_Bean{constructor(
+  id:number,
+  rest_id:number,
+  name:string,
+  amount:number
+){}}
 
 
 
