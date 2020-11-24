@@ -161,74 +161,20 @@ public class ApplicationController {
 		return true;
 	}
 	
-	
-	//--------------------Inventory API's-----------------------------//
-	
-	@PostMapping(path="/addInvItem")
-	public void addInv(@RequestBody Inventory_Bean inv) {
-		//get existing item entry for item, if any
-		Inventory_Bean oldItem = invRepo.getSpecificItem(inv.getRest_id(), inv.getName());
+	@PostMapping(path="/order") 
+	public boolean order(@RequestBody Menu_Bean mb) {
 		
-		if(oldItem != null) {
-			oldItem.setAmount(inv.getAmount() + oldItem.getAmount());
-			invRepo.save(oldItem);
+		for(int i=0; i< mb.getIngredients().length; i++) {
+			Inventory_Bean ib = new Inventory_Bean();
+			ib = invRepo.FindObject(mb.getIngredients()[i], mb.getRest_id());
+			ib.setAmount(ib.getAmount() - mb.getQuantity()[i]);
+			invRepo.save(ib);
 		}
-		else {
-			invRepo.save(inv);
-		}
-		
-		
-	}
-	
-	@PostMapping(path="/removeInvItem")
-	public boolean remInv(@RequestBody Inventory_Bean inv) { //returns true if there are any items left
-
-		//get existing item entry for item, if any
-		Inventory_Bean oldItem = invRepo.getSpecificItem(inv.getRest_id(), inv.getName());
-		
-		if(oldItem != null) {
-			int n1 = oldItem.getAmount() - inv.getAmount();
-			if(n1 < 1) { //if items depleted, delete it from the db and quit this method
-				invRepo.delete(oldItem);
-				return false;
-			}
-			
-			oldItem.setAmount(oldItem.getAmount() - inv.getAmount());
-			invRepo.save(oldItem);
-			return true;
-		}
-		
-		return false;
-	}
-	
-
-	@GetMapping(path="/getRestInv")
-	public List<Inventory_Bean> getRestInv(@RequestParam long restID){
-		return invRepo.getRestInventory(restID);
-	}
-	
-	
-
-	// -------------------- Menu API's------------------------- //
-	
-	@PostMapping(path="/newMenuItem")
-	public boolean newMenuItem(@RequestBody Menu_Bean menu) {
-		menuRepo.save(menu);
 		
 		return true;
-	}
-	
-	@GetMapping(path="/getAllMenu")
-	public List<Menu_Bean> getAllMenu() {
-		return menuRepo.fullMenu();
-	}
-	
-	@GetMapping(path="/getMenu")
-	public List<Menu_Bean> getRestMenu(@RequestParam int restID){
-		return menuRepo.restMenu(restID);
+		
 	}
 
-	
 	@GetMapping(path="/getAvail")
 	public List<Menu_Bean> getAvailableMenuItems(@RequestParam long restID){
 		List<Menu_Bean> items = menuRepo.restMenu(restID);
@@ -279,10 +225,84 @@ public class ApplicationController {
 		
 		return available;
 	}
+
 	
+	// --------------------Inventory API's-----------------------------//
+	
+	@PostMapping(path="/addInvItem")
+	public void addInv(@RequestBody Inventory_Bean inv) {
+		//get existing item entry for item, if any
+		Inventory_Bean oldItem = invRepo.getSpecificItem(inv.getRest_id(), inv.getName());
+		
+		if(oldItem != null) {
+			oldItem.setAmount(inv.getAmount() + oldItem.getAmount());
+			invRepo.save(oldItem);
+		}
+		else {
+			invRepo.save(inv);
+		}
+		
+		
+	}
+	
+	@PostMapping(path="/removeInvItem")
+	public boolean remInv(@RequestBody Inventory_Bean inv) { //returns true if there are any items left
+
+		//get existing item entry for item, if any
+		Inventory_Bean oldItem = invRepo.getSpecificItem(inv.getRest_id(), inv.getName());
+		
+		if(oldItem != null) {
+			int n1 = oldItem.getAmount() - inv.getAmount();
+			if(n1 < 1) { //if items depleted, delete it from the db and quit this method
+				invRepo.delete(oldItem);
+				return false;
+			}
+			
+			oldItem.setAmount(oldItem.getAmount() - inv.getAmount());
+			invRepo.save(oldItem);
+			return true;
+		}
+		
+		return false;
+	}
+	
+
+	@GetMapping(path="/getRestInv")
+	public List<Inventory_Bean> getRestInv(@RequestParam long restID){
+		return invRepo.getRestInventory(restID);
+	}
+	
+	
+
+	
+	// -------------------- Menu API's------------------------- //
+	
+	@PostMapping(path="/newMenuItem")
+	public boolean newMenuItem(@RequestBody Menu_Bean menu) {
+		menuRepo.save(menu);
+		
+		return true;
+	}
+	
+	@GetMapping(path="/getAllMenu")
+	public List<Menu_Bean> getAllMenu() {
+		return menuRepo.fullMenu();
+	}
+	
+	@GetMapping(path="/getMenu")
+	public List<Menu_Bean> getRestMenu(@RequestParam int restID){
+
+		return menuRepo.restMenu(restID);
+	}
+
+		
 	
 	
 
 
 
 }
+
+	
+
+

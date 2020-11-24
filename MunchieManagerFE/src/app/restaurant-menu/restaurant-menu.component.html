@@ -1,25 +1,65 @@
 <div class="container">
+    
+    <button class="btn btn-success" style="float: right;" *ngIf="!viewcartmode"(click)="start_viewcartmode()">View Cart</button>
+    <button class="btn btn-warning" style="float: right;" *ngIf="viewcartmode"(click)="end_viewcartmode()">View Menu</button>
     <br>
-    <h1 class="heading" style="text-align: center;">MENU ITEMS</h1>
-    <br><br>
-    <table>
+
+
+
+    <div *ngIf="!viewcartmode">
+      <h1 class="heading" style="text-align: center;">MENU ITEMS</h1>
+      <br><br>
+      <table>
+          <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Action</th>
+          </tr>
+
+
+          <tr *ngFor="let item of menu_items">
+            <td>{{item.name}}</td>
+            <td>{{item.price}}</td>
+            <td>
+                <button class="btn btn-success" (click)="AddToOrder(item)">Add to Order</button>&nbsp;
+            </td>
+          </tr>
+          
+      </table>
+    </div>
+
+    <div *ngIf="viewcartmode">
+
+      <h1 class="heading" style="text-align: center;">CART</h1>
+      <br><br>
+
+      <table>
         <tr>
           <th>Name</th>
           <th>Price</th>
           <th>Action</th>
         </tr>
 
-
-        <tr *ngFor="let item of menu_items">
+        <tr *ngFor="let item of order; index as i">
           <td>{{item.name}}</td>
           <td>{{item.price}}</td>
           <td>
-              <button class="btn btn-success" (click)="AddToCart(item)">Add to Order</button>&nbsp;
+              <button class="btn btn-danger" (click)="Remove_item(i, item.price)">Remove</button>&nbsp;
           </td>
         </tr>
-        
-      </table>
 
-</div>
+        <tr> 
+          <td>TOTAL</td>
+          <td>{{sum_cost}}</td>
+          <td><button class="btn btn-success" (click)="PlaceOrder()">Place Order</button></td>
+        </tr>
+        
+    </table>
+
+
+
+    </div>
+
+  </div>
 
 

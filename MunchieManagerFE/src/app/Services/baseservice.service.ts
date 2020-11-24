@@ -111,6 +111,13 @@ export class BaseserviceService {
       return this.http.get<any>(url)
     }
 
+    //------------------------------Customer API Calls--------------------------------------------------
+
+    Order(menu_item){
+      let url = "http://localhost:8080/order"
+      return this.http.post<any>(url, menu_item)
+    }
+
 }
 
 
