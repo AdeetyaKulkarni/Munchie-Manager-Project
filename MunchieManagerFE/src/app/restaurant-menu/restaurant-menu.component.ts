@@ -65,6 +65,7 @@ export class RestaurantMenuComponent implements OnInit {
    this.order = []
    this.sum_cost = 0
    this.end_viewcartmode()
+   this.ngOnInit()
   }
 
   start_viewcartmode(){
