@@ -316,6 +316,10 @@ public class ApplicationController {
 		
 		List<String> trendsName = trendsRepo.RetrieveItemNameByDate(rest_id, date, 1);
 		
+		if (trendsName.size() == 0) {
+			return "{}";
+		}
+		
 		Hashtable<String, Integer> dict = new Hashtable<String, Integer>();
 		
 		for (int i = 0; i < trendsName.size(); i++) {
@@ -343,6 +347,10 @@ public class ApplicationController {
 	public String ingredientPopularity(long rest_id, Date date) {
 		
 		List<String> trendsName = trendsRepo.RetrieveItemNameByDate(rest_id, date, 2);
+		
+		if (trendsName.size() == 0) {
+			return "{}";
+		}
 		
 		Hashtable<String, Integer> dict = new Hashtable<String, Integer>();
 		
