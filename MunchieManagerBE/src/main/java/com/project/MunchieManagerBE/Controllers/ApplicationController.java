@@ -2,6 +2,8 @@ package com.project.MunchieManagerBE.Controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
+import java.util.Hashtable;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,12 +18,14 @@ import com.project.MunchieManagerBE.Beans.Customer_Bean;
 import com.project.MunchieManagerBE.Beans.Employee_Bean;
 import com.project.MunchieManagerBE.Beans.Inventory_Bean;
 import com.project.MunchieManagerBE.Beans.Menu_Bean;
+import com.project.MunchieManagerBE.Beans.Trends_Bean;
 import com.project.MunchieManagerBE.DBRepos.CustomerRepo;
 import com.project.MunchieManagerBE.DBRepos.EmployeeRepo;
 import com.project.MunchieManagerBE.DBRepos.InventoryRepo;
 import com.project.MunchieManagerBE.DBRepos.MenuRepo;
 import com.project.MunchieManagerBE.DBRepos.RegistrationRepo;
 import com.project.MunchieManagerBE.DBRepos.TestRepo;
+import com.project.MunchieManagerBE.DBRepos.TrendsRepo;
 
 import net.minidev.json.JSONObject;
 
@@ -48,6 +52,9 @@ public class ApplicationController {
 	
 	@Autowired
 	private TestRepo repo;
+	
+	@Autowired
+	private TrendsRepo trendsRepo;
 	
 	// -----------------TEST METHODS------------------------------ //
 	
@@ -295,9 +302,70 @@ public class ApplicationController {
 		return menuRepo.restMenu(restID);
 	}
 
+	// -------------------- Trends API's------------------------- //
+	
+	@PostMapping(path="/newTrendsItem")
+	public boolean newTrendsItem(@RequestBody Trends_Bean trend) {
+		trendsRepo.save(trend);
 		
+		return true;
+	}
 	
+	@GetMapping(path="/getRestaurantTrends")
+	public String foodPopularity(long rest_id, Date date) {
+		
+		List<String> trendsName = trendsRepo.RetrieveItemNameByDate(rest_id, date, 1);
+		
+		Hashtable<String, Integer> dict = new Hashtable<String, Integer>();
+		
+		for (int i = 0; i < trendsName.size(); i++) {
+			if (!dict.containsKey(trendsName.get(i))) {
+				dict.put(trendsName.get(i), 1);
+			}
+			else {
+				dict.put(trendsName.get(i), dict.get(trendsName.get(i)) + 1);
+			}
+		}
+		
+		String[] listString = (String[]) dict.keySet().toArray(); 
+		String Result = "{ ";
+		
+		for (int i = 0; i < dict.size(); i++) {
+			Result += "\"" + listString[0] + "\":" + " \"" + dict.get(listString[0]) + "\", \n";  
+		}
+		
+		Result += "}";
+		
+		return Result;
+	}
 	
+	@GetMapping(path="/getGoodsTrends")
+	public String ingredientPopularity(long rest_id, Date date) {
+		
+		List<String> trendsName = trendsRepo.RetrieveItemNameByDate(rest_id, date, 2);
+		
+		Hashtable<String, Integer> dict = new Hashtable<String, Integer>();
+		
+		for (int i = 0; i < trendsName.size(); i++) {
+			if (!dict.containsKey(trendsName.get(i))) {
+				dict.put(trendsName.get(i), 1);
+			}
+			else {
+				dict.put(trendsName.get(i), dict.get(trendsName.get(i)) + 1);
+			}
+		}
+		
+		String[] listString = (String[]) dict.keySet().toArray(); 
+		String Result = "{ ";
+		
+		for (int i = 0; i < dict.size(); i++) {
+			Result += "\"" + listString[0] + "\":" + " \"" + dict.get(listString[0]) + "\", \n";  
+		}
+		
+		Result += "}";
+		
+		return Result;
+	}
 
 
 
