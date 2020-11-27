@@ -4,6 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
 import java.util.Hashtable;
+import java.util.Map;
+import java.io.IOException;
+import java.util.HashMap;
+ 
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.type.TypeReference;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -312,9 +320,9 @@ public class ApplicationController {
 	}
 	
 	@GetMapping(path="/getRestaurantTrends")
-	public String foodPopularity(long rest_id, Date date) {
+	public String foodPopularity(long rest_id, String startdate, String enddate) {
 		
-		List<String> trendsName = trendsRepo.RetrieveItemNameByDate(rest_id, date, 1);
+		List<String> trendsName = trendsRepo.RetrieveItemNameByDate(rest_id, startdate, enddate, 1);
 		
 		if (trendsName.size() == 0) {
 			return "{}";
@@ -344,9 +352,9 @@ public class ApplicationController {
 	}
 	
 	@GetMapping(path="/getGoodsTrends")
-	public String ingredientPopularity(long rest_id, Date date) {
+	public String ingredientPopularity(long rest_id, String startdate, String enddate) {
 		
-		List<String> trendsName = trendsRepo.RetrieveItemNameByDate(rest_id, date, 2);
+		List<String> trendsName = trendsRepo.RetrieveItemNameByDate(rest_id, startdate, enddate, 2);
 		
 		if (trendsName.size() == 0) {
 			return "{}";
@@ -375,8 +383,41 @@ public class ApplicationController {
 		return Result;
 	}
 
-
-
+	// -------------------- Reporting API's------------------------- //
+	
+	//@PostMapping(path="/newTrendsItem")
+	public String GenerateReport(long rest_id, String startdate, String enddate) {
+		
+		String foodPopString = foodPopularity(rest_id, startdate, enddate);
+		String ingPopString = ingredientPopularity(rest_id, startdate, enddate);
+		
+		HashMap<String, Object> foodmap = new HashMap<String, Object>();
+		HashMap<String, Object> ingmap = new HashMap<String, Object>();
+        
+        ObjectMapper mapper = new ObjectMapper();
+        try
+        {
+            //Convert Map to JSON
+            foodmap = mapper.readValue(foodPopString, new TypeReference<Map<String, Object>>(){});
+            ingmap = mapper.readValue(ingPopString, new TypeReference<Map<String, Object>>(){});
+             
+            //Print JSON output
+            
+        } 
+        catch (JsonGenerationException e) {
+            e.printStackTrace();
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        
+		
+		return "";
+	}
+	
+	
 }
 
 	

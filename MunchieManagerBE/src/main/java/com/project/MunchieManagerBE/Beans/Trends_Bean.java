@@ -16,12 +16,12 @@ public class Trends_Bean {
 	long rest_id;
 	String itemname;
 	int itemtype;
-	Date date;
+	String date;
 	
 	
 	public Trends_Bean() {}
 	
-	public Trends_Bean(long id, long rest_id, String itemname, int itemtype, Date date) {
+	public Trends_Bean(long id, long rest_id, String itemname, int itemtype, String date) {
 		super();
 		this.id = id;
 		this.rest_id = rest_id;
@@ -56,7 +56,7 @@ public class Trends_Bean {
 	}
 
 	@Column(name = "date")
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
 	
@@ -82,7 +82,7 @@ public class Trends_Bean {
 	}
 
 
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 	
