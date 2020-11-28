@@ -35,7 +35,7 @@ import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { CustomerDasboardComponent } from './customer-dasboard/customer-dasboard.component';
 import { RestaurantMenuComponent } from './restaurant-menu/restaurant-menu.component';
 import { DatePipe } from '@angular/common';
-
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -73,6 +73,7 @@ import { DatePipe } from '@angular/common';
     MatCardModule,
     MatButtonModule,
     MatIconModule,
+    MatSelectModule,
   ],
   providers: [
     ThemeService,

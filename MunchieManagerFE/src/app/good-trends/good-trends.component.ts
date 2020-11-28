@@ -79,7 +79,7 @@ export class GoodTrendsComponent implements OnInit {
     this.beginDate = this.datePipe.transform(this.beginDate, "yyyyMMdd");
     this.endDate = this.endDate.toString();
     this.beginDate = this.beginDate.toString();
-    console.log(this.beginDate)
+    console.log(this.beginDate);
     console.log(this.endDate);
 
     let privilege = localStorage.getItem("user_privilege");

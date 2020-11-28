@@ -120,10 +120,21 @@ export class BaseserviceService {
 
     //------------------------------Menu API Calls--------------------------------------------------
 
+    GetMenuItems(id){
+      let url = "http://localhost:8080/getMenuItems?restID="+id
+      return this.http.get<any>(url)
+    }
+
     GetAvailableMenuItems(id){
       let url = "http://localhost:8080/getAvail?restID="+id
       return this.http.get<any>(url)
     }
+
+    AddMenuItem(menuitem){
+      let url = "http://localhost:8080/newMenuItem"
+      return this.http.post<any>(url, menuitem)
+    }
+
 
     //------------------------------Customer API Calls--------------------------------------------------
 

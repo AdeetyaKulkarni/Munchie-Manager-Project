@@ -35,6 +35,157 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
+-- Name: customer; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.customer (
+    id bigint NOT NULL,
+    email character varying(255),
+    firstname character varying(255),
+    lastname character varying(255),
+    password character varying(255),
+    privilege integer,
+    username character varying(255)
+);
+
+
+ALTER TABLE public.customer OWNER TO postgres;
+
+--
+-- Name: customer_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.customer_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.customer_id_seq OWNER TO postgres;
+
+--
+-- Name: customer_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.customer_id_seq OWNED BY public.customer.id;
+
+
+--
+-- Name: employee; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.employee (
+    id bigint NOT NULL,
+    email character varying(255),
+    firstname character varying(255),
+    lastname character varying(255),
+    password character varying(255),
+    privilege integer,
+    restaurantaddress character varying(255),
+    restaurantname character varying(255),
+    username character varying(255)
+);
+
+
+ALTER TABLE public.employee OWNER TO postgres;
+
+--
+-- Name: employee_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.employee_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.employee_id_seq OWNER TO postgres;
+
+--
+-- Name: employee_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.employee_id_seq OWNED BY public.employee.id;
+
+
+--
+-- Name: inventory; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.inventory (
+    id bigint NOT NULL,
+    amount integer,
+    name character varying(255),
+    rest_id bigint
+);
+
+
+ALTER TABLE public.inventory OWNER TO postgres;
+
+--
+-- Name: inventory_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.inventory_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.inventory_id_seq OWNER TO postgres;
+
+--
+-- Name: inventory_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.inventory_id_seq OWNED BY public.inventory.id;
+
+
+--
+-- Name: menu; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.menu (
+    id bigint NOT NULL,
+    ingredients bytea,
+    name character varying(255),
+    price integer,
+    quantity bytea,
+    rest_id bigint,
+    visibility boolean
+);
+
+
+ALTER TABLE public.menu OWNER TO postgres;
+
+--
+-- Name: menu_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.menu_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.menu_id_seq OWNER TO postgres;
+
+--
+-- Name: menu_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.menu_id_seq OWNED BY public.menu.id;
+
+
+--
 -- Name: name; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -69,10 +220,127 @@ ALTER SEQUENCE public.name_table_id_seq OWNED BY public.name.table_id;
 
 
 --
+-- Name: trends; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.trends (
+    id bigint NOT NULL,
+    date character varying(255),
+    itemname character varying(255),
+    itemtype integer,
+    rest_id bigint
+);
+
+
+ALTER TABLE public.trends OWNER TO postgres;
+
+--
+-- Name: trends_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.trends_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.trends_id_seq OWNER TO postgres;
+
+--
+-- Name: trends_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.trends_id_seq OWNED BY public.trends.id;
+
+
+--
+-- Name: customer id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.customer ALTER COLUMN id SET DEFAULT nextval('public.customer_id_seq'::regclass);
+
+
+--
+-- Name: employee id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.employee ALTER COLUMN id SET DEFAULT nextval('public.employee_id_seq'::regclass);
+
+
+--
+-- Name: inventory id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.inventory ALTER COLUMN id SET DEFAULT nextval('public.inventory_id_seq'::regclass);
+
+
+--
+-- Name: menu id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.menu ALTER COLUMN id SET DEFAULT nextval('public.menu_id_seq'::regclass);
+
+
+--
 -- Name: name table_id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.name ALTER COLUMN table_id SET DEFAULT nextval('public.name_table_id_seq'::regclass);
+
+
+--
+-- Name: trends id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.trends ALTER COLUMN id SET DEFAULT nextval('public.trends_id_seq'::regclass);
+
+
+--
+-- Data for Name: customer; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.customer (id, email, firstname, lastname, password, privilege, username) FROM stdin;
+2	LL	LOL	LOL	LL	2	LOLLOL
+\.
+
+
+--
+-- Data for Name: employee; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.employee (id, email, firstname, lastname, password, privilege, restaurantaddress, restaurantname, username) FROM stdin;
+1	a	Aaron	Woods	a	0	2210 Main Street	Torchys Tacos	AaronWoods
+2	h	Harsh	Wadhwani	h	0	7th Street Lubbock	Tikka Shack	HarshWadhwani
+3	B	B	B	B	0	8th street	Papa johns	BB
+4	U	U	U	U	0	U	U	UU
+5	E1	E1	E	E1	1	\N	4	\N
+6	E4	E4	E4	E4	1	\N	4	\N
+9	J1	J1	J1	J1	1	\N	1	\N
+\.
+
+
+--
+-- Data for Name: inventory; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.inventory (id, amount, name, rest_id) FROM stdin;
+6	10	Beans	2
+47	7	Bread	1
+46	8	Cheese	1
+48	-26	Beans	1
+\.
+
+
+--
+-- Data for Name: menu; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.menu (id, ingredients, name, price, quantity, rest_id, visibility) FROM stdin;
+2	\\xaced0005757200025b4a782004b512b175930200007870000000020000000000000030000000000000002e	Bean & Cheese Dish 	15	\\xaced0005757200025b494dba602676eab2a50200007870000000020000000300000005	1	t
+3	\\xaced0005757200025b4a782004b512b175930200007870000000010000000000000030	Bean & Tortilla Dish 	5	\\xaced0005757200025b494dba602676eab2a50200007870000000010000000d	1	t
+\.
 
 
 --
@@ -85,10 +353,85 @@ COPY public.name (table_id, fname, lname) FROM stdin;
 
 
 --
+-- Data for Name: trends; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.trends (id, date, itemname, itemtype, rest_id) FROM stdin;
+\.
+
+
+--
+-- Name: customer_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.customer_id_seq', 2, true);
+
+
+--
+-- Name: employee_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.employee_id_seq', 9, true);
+
+
+--
+-- Name: inventory_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.inventory_id_seq', 48, true);
+
+
+--
+-- Name: menu_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.menu_id_seq', 3, true);
+
+
+--
 -- Name: name_table_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
 SELECT pg_catalog.setval('public.name_table_id_seq', 1, true);
+
+
+--
+-- Name: trends_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.trends_id_seq', 1, false);
+
+
+--
+-- Name: customer customer_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.customer
+    ADD CONSTRAINT customer_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: employee employee_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.employee
+    ADD CONSTRAINT employee_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: inventory inventory_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.inventory
+    ADD CONSTRAINT inventory_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: menu menu_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.menu
+    ADD CONSTRAINT menu_pkey PRIMARY KEY (id);
 
 
 --
@@ -97,6 +440,14 @@ SELECT pg_catalog.setval('public.name_table_id_seq', 1, true);
 
 ALTER TABLE ONLY public.name
     ADD CONSTRAINT name_pkey PRIMARY KEY (table_id);
+
+
+--
+-- Name: trends trends_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.trends
+    ADD CONSTRAINT trends_pkey PRIMARY KEY (id);
 
 
 --
