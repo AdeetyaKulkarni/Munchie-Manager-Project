@@ -21,6 +21,7 @@ public class Trends_Bean {
 	
 	public Trends_Bean() {}
 	
+	
 	public Trends_Bean(long id, long rest_id, String itemname, int itemtype, String date) {
 		super();
 		this.id = id;
@@ -31,20 +32,17 @@ public class Trends_Bean {
 	}
 
 
-
-
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	public long getId() {
 		return id;
 	}
 
-
 	@Column(name = "rest_id")
 	public long getRest_id() {
 		return rest_id;
 	}
-	
+
 	@Column(name = "itemname")
 	public String getItemname() {
 		return itemname;
@@ -59,7 +57,6 @@ public class Trends_Bean {
 	public String getDate() {
 		return date;
 	}
-	
 	
 
 	public void setId(long id) {
@@ -85,6 +82,9 @@ public class Trends_Bean {
 	public void setDate(String date) {
 		this.date = date;
 	}
+
+
+	
 	
 	
 }
