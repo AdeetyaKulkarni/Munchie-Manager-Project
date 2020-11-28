@@ -241,6 +241,10 @@ public class ApplicationController {
 		return available;
 	}
 
+	@GetMapping(path="/getMenuItems")
+	public List<Menu_Bean> getMenuItemsbyRestID(@RequestParam long restID){
+		return menuRepo.restMenu(restID);
+	}
 	
 	// --------------------Inventory API's-----------------------------//
 	

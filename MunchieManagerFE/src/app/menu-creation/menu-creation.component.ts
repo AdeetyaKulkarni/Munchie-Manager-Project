@@ -43,23 +43,28 @@ export class MenuCreationComponent implements OnInit {
       error => {alert("BAD API")}
     )
 
-    this.service.GetAvailableMenuItems(this.cur_rest_id).subscribe(
+    this.service.GetMenuItems(this.cur_rest_id).subscribe(
       response => {
         this.rest_menuitems = response
         console.log(response)
-      ,
-      error => {alert("BAD API")}
+        ,
+        error => {alert("BAD API")}
      }
     )
   }
 
   AddMenuItem(){
     this.menu_bean["ingredients"] = this.selectedingredients;
-    console.log(this.selectedingredients)
+    this.menu_bean["rest_id"] = this.cur_rest_id;
+    
     this.service.AddMenuItem(this.menu_bean).subscribe(
-      response => {console.log(response)},
+      response => { console.log(response)
+                    this.end_addmode()          
+                    this.ngOnInit()
+                  },
       error => {alert("BAD API")}
     )
+
 
   }
 
