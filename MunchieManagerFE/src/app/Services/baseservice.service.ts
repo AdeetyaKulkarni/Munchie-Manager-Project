@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Employee_Bean, Inventory_Bean } from '../main-page/main-page.component';
 
@@ -103,6 +103,20 @@ export class BaseserviceService {
       return this.http.get<any>(url);
 
     }
+
+    //------------------------------Trends API Calls-------------------------------------------------------
+
+    GetGoodTrends(id, beginDate, endDate) {
+      const params = new HttpParams()
+        .set('rest_id', id)
+        .set('startdate', beginDate)
+        .set('enddate', endDate)
+
+      let url = "http:localhost:8080/getGoodsTrends"
+      return this.http.get<any>(url, {params});
+    }
+    
+
 
     //------------------------------Menu API Calls--------------------------------------------------
 

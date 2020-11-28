@@ -34,6 +34,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { CustomerDasboardComponent } from './customer-dasboard/customer-dasboard.component';
 import { RestaurantMenuComponent } from './restaurant-menu/restaurant-menu.component';
+import { DatePipe } from '@angular/common';
 
 
 @NgModule({
@@ -75,6 +76,7 @@ import { RestaurantMenuComponent } from './restaurant-menu/restaurant-menu.compo
   ],
   providers: [
     ThemeService,
+    DatePipe,
   ],
   bootstrap: [AppComponent],
 })
