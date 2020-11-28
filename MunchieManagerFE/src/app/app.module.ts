@@ -34,7 +34,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { CustomerDasboardComponent } from './customer-dasboard/customer-dasboard.component';
 import { RestaurantMenuComponent } from './restaurant-menu/restaurant-menu.component';
-
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -72,6 +72,7 @@ import { RestaurantMenuComponent } from './restaurant-menu/restaurant-menu.compo
     MatCardModule,
     MatButtonModule,
     MatIconModule,
+    MatSelectModule,
   ],
   providers: [
     ThemeService,

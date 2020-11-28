@@ -32,7 +32,15 @@ export class Inventory_Bean{constructor(
   amount:number
 ){}}
 
-
+export class Menu_Bean{constructor(
+  id:number,
+  rest_id:number,
+  name: string,
+  ingredients: number[],
+  quantity: number[],
+  price: number,
+  visible: boolean,
+){}}
 
 @Component({
   selector: 'app-main-page',

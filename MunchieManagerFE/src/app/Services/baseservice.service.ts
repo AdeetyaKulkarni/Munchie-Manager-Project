@@ -111,6 +111,12 @@ export class BaseserviceService {
       return this.http.get<any>(url)
     }
 
+    AddMenuItem(menuitem){
+      let url = "http://localhost:8080/newMenuItem"
+      return this.http.post<any>(url, menuitem)
+    }
+
+
     //------------------------------Customer API Calls--------------------------------------------------
 
     Order(menu_item){
