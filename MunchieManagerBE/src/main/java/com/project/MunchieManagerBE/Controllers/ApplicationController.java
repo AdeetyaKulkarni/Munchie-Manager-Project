@@ -485,7 +485,7 @@ public class ApplicationController {
 	// -------------------- Reporting API's------------------------- //
 	
 	@PostMapping(path="/generateReport")
-	public String GenerateReport(long rest_id, int startdate, int enddate) {
+	public String GenerateReport(@RequestParam long rest_id, @RequestParam int startdate, @RequestParam int enddate) {
 		JSONObject foodPopString = new JSONObject();
 		JSONObject ingPopString = new JSONObject();
 		
@@ -509,7 +509,8 @@ public class ApplicationController {
 	
 	// -------------------- Dashboard  API's------------------------- //
 	
-	public String MostPopularItem(long rest_id) {
+	@GetMapping(path="/mostpopulartoday")
+	public String MostPopularItem(@RequestParam long rest_id) {
 		
 		JSONObject foodPopString = new JSONObject();
 		
@@ -530,7 +531,8 @@ public class ApplicationController {
 		return Popular;
 	}
 	
-	public String MostPopularItem(long rest_id, int date) {
+	@GetMapping(path="/mostpopularbyday")
+	public String MostPopularItem(@RequestParam long rest_id, @RequestParam int date) {
 		
 		JSONObject foodPopString = new JSONObject();
 		
