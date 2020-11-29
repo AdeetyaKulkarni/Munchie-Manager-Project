@@ -15,9 +15,11 @@ export class MenuCreationComponent implements OnInit {
   selected:any;
   selectedingredients = [];
 
-  itemingredients  = [ ];
+  itemingredients  = [];
 
   rest_menuitems = [];
+
+  ingredientsamount = [];
 
   addmode = 0
   removemode = 0
@@ -38,6 +40,9 @@ export class MenuCreationComponent implements OnInit {
     this.service.GetRestInventory(this.cur_rest_id).subscribe(
       response => {
          this.itemingredients = response.sort();
+         this.itemingredients.forEach(element => {
+          element["amount"] = 0;
+        });
          console.log(this.itemingredients);
       },
       error => {alert("BAD API")}
@@ -55,7 +60,9 @@ export class MenuCreationComponent implements OnInit {
 
   AddMenuItem(){
     this.menu_bean["ingredients"] = this.selectedingredients;
+    this.menu_bean["quantity"] = this.ingredientsamount;
     this.menu_bean["rest_id"] = this.cur_rest_id;
+    console.log(this.menu_bean)
     
     this.service.AddMenuItem(this.menu_bean).subscribe(
       response => { console.log(response)
@@ -64,7 +71,7 @@ export class MenuCreationComponent implements OnInit {
                   },
       error => {alert("BAD API")}
     )
-
+    
 
   }
 
@@ -92,17 +99,20 @@ export class MenuCreationComponent implements OnInit {
     this.removemode = 0
   }
 
-  onChange(event) {
+  onChange(event,i) {
     console.log(event.checked)
     console.log(event.source.value)
+    console.log(this.itemingredients[i].amount)
   
     if(event.checked) {
       this.selectedingredients.push(event.source.value.id)
+      this.ingredientsamount.push(this.itemingredients[i].amount)
     } else {
       
       for(var index in this.selectedingredients){
         if(this.selectedingredients[index] == event.source.value){
           delete this.selectedingredients[index]
+          delete this.ingredientsamount[index]
         }
       }
 
