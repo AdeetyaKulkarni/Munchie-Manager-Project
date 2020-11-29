@@ -13,8 +13,11 @@ import com.project.MunchieManagerBE.Beans.Name;
 
 public interface TrendsRepo extends JpaRepository<Trends_Bean, Long> {
 	
+	@Query(value = "SELECT itemname FROM customer WHERE rest_id=?1 and date=?2 and itemtype=?3 ORDER BY id", nativeQuery = true)
+	List<String> RetrieveItemNameByDate(long rest_id, int date, int itemtype);
+	
 	@Query(value = "SELECT itemname FROM customer WHERE rest_id=?1 and date>=?2 and date<=?3 and itemtype=?4 ORDER BY id", nativeQuery = true)
-	List<String> RetrieveItemNameByDate(long rest_id, String startdate, String enddate, int itemtype);
+	List<String> RetrieveItemNameByDateRange(long rest_id, int startdate, int enddate, int itemtype);
 	
 	//@Query(value = "SELECT quantity FROM customer WHERE rest_id=?1 and date>=?2 and itemtype=?3 ORDER BY id", nativeQuery = true)
 	//long[] RetrieveItemQuantityByDate(long rest_id, Date date, int itemtype);

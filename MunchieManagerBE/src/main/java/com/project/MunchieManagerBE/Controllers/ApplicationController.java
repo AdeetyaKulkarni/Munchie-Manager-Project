@@ -378,76 +378,84 @@ public class ApplicationController {
 	}
 	
 	@GetMapping(path="/getRestaurantTrends")
-	public String foodPopularity(long rest_id, String startdate, String enddate) {
+	public JSONObject foodPopularity(@RequestParam long rest_id, @RequestParam int date) {
 		
-		List<String> trendsName = trendsRepo.RetrieveItemNameByDate(rest_id, startdate, enddate, 1);
+		List<String> trendsName = trendsRepo.RetrieveItemNameByDate(rest_id, date, 1);
+		JSONObject json = new JSONObject();
 		
 		if (trendsName.size() == 0) {
-			return "{}";
+			return json;
 		}
 		
-		Hashtable<String, Integer> dict = new Hashtable<String, Integer>();
+		//Hashtable<String, Integer> dict = new Hashtable<String, Integer>();
 		
 		for (int i = 0; i < trendsName.size(); i++) {
-			if (!dict.containsKey(trendsName.get(i))) {
-				dict.put(trendsName.get(i), 1);
+			if (!json.containsKey(trendsName.get(i))) {
+				json.put(trendsName.get(i), 1);
 			}
 			else {
-				dict.put(trendsName.get(i), dict.get(trendsName.get(i)) + 1);
+				int temp = (int) json.get(trendsName.get(i));
+				json.put(trendsName.get(i), temp + 1);
 			}
 		}
 		
-		String[] listString = (String[]) dict.keySet().toArray(); 
+		/*String[] listString = (String[]) dict.keySet().toArray(); 
 		String Result = "{ ";
 		
 		for (int i = 0; i < dict.size(); i++) {
 			Result += "\"" + listString[0] + "\":" + " \"" + dict.get(listString[0]) + "\", \n";  
 		}
 		
-		Result += "}";
+		Result += "}";*/
 		
-		return Result;
+		return json;
 	}
 	
 	@GetMapping(path="/getGoodsTrends")
-	public String ingredientPopularity(@RequestParam long rest_id, @RequestParam String startdate, @RequestParam String enddate) {
+	public JSONObject ingredientPopularity(@RequestParam long rest_id, @RequestParam int date) {
 		
-		List<String> trendsName = trendsRepo.RetrieveItemNameByDate(rest_id, startdate, enddate, 2);
+		List<String> trendsName = trendsRepo.RetrieveItemNameByDate(rest_id, date, 2);
+		JSONObject json = new JSONObject();
 		
 		if (trendsName.size() == 0) {
-			return "{}";
+			return json;
 		}
 		
-		Hashtable<String, Integer> dict = new Hashtable<String, Integer>();
+		//Hashtable<String, Integer> dict = new Hashtable<String, Integer>();
 		
 		for (int i = 0; i < trendsName.size(); i++) {
-			if (!dict.containsKey(trendsName.get(i))) {
-				dict.put(trendsName.get(i), 1);
+			if (!json.containsKey(trendsName.get(i))) {
+				json.put(trendsName.get(i), 1);
 			}
 			else {
-				dict.put(trendsName.get(i), dict.get(trendsName.get(i)) + 1);
+				json.put(trendsName.get(i), (int) json.get(trendsName.get(i)) + 1);
 			}
 		}
 		
-		String[] listString = (String[]) dict.keySet().toArray(); 
+		/*String[] listString = (String[]) dict.keySet().toArray(); 
 		String Result = "{ ";
 		
 		for (int i = 0; i < dict.size(); i++) {
 			Result += "\"" + listString[0] + "\":" + " \"" + dict.get(listString[0]) + "\", \n";  
 		}
 		
-		Result += "}";
+		Result += "}";*/
 		
-		return Result;
+		return json;
 	}
 
 	// -------------------- Reporting API's------------------------- //
 	
 	@PostMapping(path="/generateReport")
-	public JSONObject GenerateReport(long rest_id, String startdate, String enddate) {
+	public JSONObject GenerateReport(long rest_id, int startdate, int enddate) {
+		JSONObject foodPopString = new JSONObject();
+		JSONObject ingPopString = new JSONObject();
 		
-		String foodPopString = foodPopularity(rest_id, startdate, enddate);
-		String ingPopString = ingredientPopularity(rest_id, startdate, enddate);
+		for ( int i = startdate; i < enddate + 1; i++) {
+			foodPopString = foodPopularity(rest_id, i);
+			ingPopString = ingredientPopularity(rest_id, i);
+		}
+		
 		
 		HashMap<String, Object> foodmap = new HashMap<String, Object>();
 		HashMap<String, Object> ingmap = new HashMap<String, Object>();
