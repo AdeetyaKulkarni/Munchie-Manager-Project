@@ -4,6 +4,7 @@ import * as pluginDataLabels from 'chart.js'
 import { Label } from 'ng2-charts';
 import { BaseserviceService } from '../Services/baseservice.service';
 import { DatePipe } from '@angular/common';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-good-trends',
@@ -63,52 +64,31 @@ export class GoodTrendsComponent implements OnInit {
 
   response_data;
 
-  // Gets current date
-  date = new Date;
-  beginDate : any;
-  endDate : any;
+  // Date variables
+  selectedDate : any;
+  selectDate = new FormControl(new Date());
+
+  showTable = false;
   
   constructor(private service: BaseserviceService, private datePipe: DatePipe) { }
   
-  ngOnInit() {
-    // Get begin and end dates, then format as strings
-    // Current date is considered the end date, 7 days previous is the begin date
-    this.date.getDate();
-    this.endDate =  this.datePipe.transform(this.date, "yyyyMMdd");
-    this.beginDate = this.date.setDate(this.date.getDate() - 7);
-    this.beginDate = this.datePipe.transform(this.beginDate, "yyyyMMdd");
-    this.endDate = this.endDate.toString();
-    this.beginDate = this.beginDate.toString();
-    console.log(this.beginDate);
-    console.log(this.endDate);
+  ngOnInit() {}
 
-    let privilege = localStorage.getItem("user_privilege");
-    if(privilege == '0'){
-      console.log("got here");
-      //MANAGER PRIV
-      this.manager_privilege = 1
-      
-      this.service.GetGoodTrends(localStorage.getItem("user_id"), this.beginDate, this.endDate).subscribe(
+  selectEvent(event: any) {
+    this.selectedDate = this.datePipe.transform(this.selectDate.value, "yyyyMMdd");
+    this.selectedDate = Number(this.selectedDate);
+
+    if (event) {
+      this.service.GetGoodTrends(localStorage.getItem("user_id"), this.selectedDate).subscribe(
         response => {
           this.response_data = response;
           console.log(response);
         },
         error => {console.log(error)}
       )
+      this.showTable = true;
     }
   }
-
-  // Logic: pass back restaurant ID to get the data for the inventory items that were used
-  // Object should be "{"inventory_item" : "name of item", "amount_used": # }
-  // getGoodTrendsData {
-  //   // Need to pass restaurant ID to get data.
-  //   this.service.GetGoodTrendsData(localStorage.getItem("user_id"), date).subscribe(
-  //     response => {
-  //       this.response_data = response
-  //     },
-  //     error => {alert("It fucking broke")}
-  //   )
-  // }
 
   
  

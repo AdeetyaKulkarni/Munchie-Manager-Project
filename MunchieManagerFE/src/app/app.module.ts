@@ -26,8 +26,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import {MatTableModule} from '@angular/material/table';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatTableModule } from '@angular/material/table';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { MatNativeDateModule } from '@angular/material';
 import { MatButtonModule } from '@angular/material/button';
@@ -35,7 +35,8 @@ import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { CustomerDasboardComponent } from './customer-dasboard/customer-dasboard.component';
 import { RestaurantMenuComponent } from './restaurant-menu/restaurant-menu.component';
 import { DatePipe } from '@angular/common';
-import {MatSelectModule} from '@angular/material/select';
+import { MatSelectModule } from '@angular/material/select';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import {MatSelectModule} from '@angular/material/select';
     MatButtonModule,
     MatIconModule,
     MatSelectModule,
+    ReactiveFormsModule,
   ],
   providers: [
     ThemeService,

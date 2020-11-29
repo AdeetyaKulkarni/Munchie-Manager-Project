@@ -36,8 +36,6 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     let privilege = localStorage.getItem("user_privilege");
     if(privilege == '0'){
-      console.log("got here");
-      //MANAGER PRIV
       this.manager_privilege = true;
     }
   }

@@ -106,11 +106,10 @@ export class BaseserviceService {
 
     //------------------------------Trends API Calls-------------------------------------------------------
 
-    GetGoodTrends(id, beginDate, endDate) {
+    GetGoodTrends(id, date) {
       const params = new HttpParams()
         .set('rest_id', id)
-        .set('startdate', beginDate)
-        .set('enddate', endDate)
+        .set('date', date)
 
       let url = "http:localhost:8080/getGoodsTrends"
       return this.http.get<any>(url, {params});
