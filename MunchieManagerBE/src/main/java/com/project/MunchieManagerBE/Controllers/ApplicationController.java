@@ -285,13 +285,10 @@ public class ApplicationController {
 		return false;
 	}
 	
-
 	@GetMapping(path="/getRestInv")
 	public List<Inventory_Bean> getRestInv(@RequestParam long restID){
 		return invRepo.getRestInventory(restID);
 	}
-	
-	
 
 	
 	// -------------------- Menu API's------------------------- //
@@ -356,7 +353,7 @@ public class ApplicationController {
 	}
 	
 	@GetMapping(path="/getGoodsTrends")
-	public String ingredientPopularity(long rest_id, String startdate, String enddate) {
+	public String ingredientPopularity(@RequestParam long rest_id, @RequestParam String startdate, @RequestParam String enddate) {
 		
 		List<String> trendsName = trendsRepo.RetrieveItemNameByDate(rest_id, startdate, enddate, 2);
 		
