@@ -184,6 +184,14 @@ public class ApplicationController {
 	@PostMapping(path="/order") 
 	public boolean order(@RequestBody Menu_Bean mb) {
 		
+		Trends_Bean item = new Trends_Bean();
+		
+		item.setRest_id(mb.getRest_id());
+		item.setItemname(mb.getName());
+		item.setItemtype(1);
+		
+		
+		
 		for(int i=0; i< mb.getIngredients().length; i++) {
 			Inventory_Bean ib = new Inventory_Bean();
 			ib = invRepo.FindObject(mb.getIngredients()[i], mb.getRest_id());
