@@ -9,6 +9,9 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Optional;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Calendar;
  
@@ -84,6 +87,19 @@ public class ApplicationController {
 		
 	}
 
+	@GetMapping(path="/getdate")
+	public String getDate()
+	{	
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+	    Date date = new Date();
+	    
+	    Format formatter = new SimpleDateFormat("yyyyMMdd");
+	    String s = formatter.format(date);
+	    return s;
+	    
+		
+	}
+	
 	
 	// -----------------LOGIN API---------------------------------//
 	
