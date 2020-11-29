@@ -492,7 +492,9 @@ public class ApplicationController {
 		String Report = "";
 		
 		for ( int i = startdate; i < enddate + 1; i++) {
-			Report += MostPopularItem(rest_id, i);
+			Report += "Most Popular Item on " + i + ": " + MostPopularItem(rest_id, i) + "\n";
+			Report += "Most Used Ingredient on " + i + ": " + MostUsedIngredient(rest_id, i) + "\n";
+			Report += "\n";
 			/*foodPopString = foodPopularity(rest_id, i);
 			ingPopString = ingredientPopularity(rest_id, i);*/
 		}
@@ -500,16 +502,16 @@ public class ApplicationController {
 		
         
 		
-		JSONObject jsonarr = new JSONObject();
+		/*JSONObject jsonarr = new JSONObject();
 		jsonarr.put("foodPopString", foodPopString);
-		jsonarr.put("inPopString", ingPopString);
+		jsonarr.put("inPopString", ingPopString);*/
 		
 		return Report;
 	}
 	
 	// -------------------- Dashboard  API's------------------------- //
 	
-	@GetMapping(path="/mostpopulartoday")
+	@GetMapping(path="/MostPopularToday")
 	public String MostPopularItem(@RequestParam long rest_id) {
 		
 		JSONObject foodPopString = new JSONObject();
@@ -531,7 +533,7 @@ public class ApplicationController {
 		return Popular;
 	}
 	
-	@GetMapping(path="/mostpopularbyday")
+	@GetMapping(path="/MostPopularByDay")
 	public String MostPopularItem(@RequestParam long rest_id, @RequestParam int date) {
 		
 		JSONObject foodPopString = new JSONObject();
@@ -544,6 +546,50 @@ public class ApplicationController {
 		
 		for (int i = 0; i < keys.length; i++) {
 			int temp = (int) foodPopString.get(keys[i]);
+			 if (temp > max) {
+				 Popular = keys[i];
+				 max = temp;
+			 }
+		}
+		
+		return Popular;
+	}
+	
+	@GetMapping(path="/MostUsedIngredientToday")
+	public String MostUsedIngredient(@RequestParam long rest_id) {
+		
+		JSONObject ingPopString = new JSONObject();
+		
+		ingPopString = ingredientPopularity(rest_id, getDate()); 
+		String Popular = "";
+		int max = 0;
+		
+		String[] keys = (String[]) ingPopString.keySet().toArray();
+		
+		for (int i = 0; i < keys.length; i++) {
+			int temp = (int) ingPopString.get(keys[i]);
+			 if (temp > max) {
+				 Popular = keys[i];
+				 max = temp;
+			 }
+		}
+		
+		return Popular;
+	}
+	
+	@GetMapping(path="/MostPopularIngredientByDay")
+	public String MostUsedIngredient(@RequestParam long rest_id, @RequestParam int date) {
+		
+		JSONObject ingPopString = new JSONObject();
+		
+		ingPopString = ingredientPopularity(rest_id, getDate()); 
+		String Popular = "";
+		int max = 0;
+		
+		String[] keys = (String[]) ingPopString.keySet().toArray();
+		
+		for (int i = 0; i < keys.length; i++) {
+			int temp = (int) ingPopString.get(keys[i]);
 			 if (temp > max) {
 				 Popular = keys[i];
 				 max = temp;
