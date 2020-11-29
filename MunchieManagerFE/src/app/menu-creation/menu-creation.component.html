@@ -61,8 +61,11 @@
         
                     <div *ngFor="let interest of itemingredients; let i = index" >
                         <mat-checkbox class="example-margin" 
-                        (change)="onChange($event)" [value]="interest">{{interest.name}}</mat-checkbox>
+                          (change)="onChange($event, i)" [value]="interest">{{interest.name}}
+                        </mat-checkbox>
+                        <input type="number" style="float: right;" [(ngModel)]="itemingredients[i].amount"/>
                     </div>
+                    
         
         
             </div>

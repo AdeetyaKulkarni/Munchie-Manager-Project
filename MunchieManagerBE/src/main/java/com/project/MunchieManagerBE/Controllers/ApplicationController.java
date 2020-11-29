@@ -1,10 +1,13 @@
 package com.project.MunchieManagerBE.Controllers;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Date;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Optional;
 import java.io.IOException;
 import java.util.HashMap;
  
@@ -108,6 +111,7 @@ public class ApplicationController {
 				obj.put("id", result.getId());
 				obj.put("firstname", result.getFirstname());
 				obj.put("privilege", result.getprivilege());
+				obj.put("rest_name", result.getRestaurant_name());
 				return obj;
 		}
 		
@@ -183,6 +187,9 @@ public class ApplicationController {
 			Inventory_Bean ib = new Inventory_Bean();
 			ib = invRepo.FindObject(mb.getIngredients()[i], mb.getRest_id());
 			ib.setAmount(ib.getAmount() - mb.getQuantity()[i]);
+			if(ib.getAmount() < 0) {
+				return false;
+			}
 			invRepo.save(ib);
 		}
 		
@@ -246,6 +253,41 @@ public class ApplicationController {
 		return menuRepo.restMenu(restID);
 	}
 	
+	@GetMapping(path="/getAvailMenu")
+	public List<Menu_Bean> getAvailMenuItemsforRestID(@RequestParam long restID){
+		
+		List<Menu_Bean> allmenu = menuRepo.restMenu(restID);
+	    ArrayList<Long> removal_index = new ArrayList<Long>();
+	    
+	    for(int i=0; i< ((allmenu.size())); i++) {
+			 long[] ingrelist = allmenu.get(i).getIngredients();
+			 int[] quantlist = allmenu.get(i).getQuantity();
+			 for(int j=0; j<((ingrelist.length)); j++) {
+				 if(this.isavailinv(ingrelist[j], quantlist[j]) == false) {
+					 removal_index.add(allmenu.get(i).getId());
+					 break;
+				 }
+			 }
+		}
+	    
+	   
+        Iterator<Menu_Bean> itr = allmenu.iterator();
+        while(itr.hasNext()) {
+        	Menu_Bean mb = itr.next();
+        	for(int i=0; i<removal_index.size(); i++) {
+        		if(mb.getId() == removal_index.get(i)) {
+        			itr.remove();
+        			break;
+        		}
+        	}
+        	
+        }
+        
+
+	    
+	    return allmenu;
+	}
+	
 	// --------------------Inventory API's-----------------------------//
 	
 	@PostMapping(path="/addInvItem")
@@ -272,7 +314,7 @@ public class ApplicationController {
 		
 		if(oldItem != null) {
 			int n1 = oldItem.getAmount() - inv.getAmount();
-			if(n1 < 1) { //if items depleted, delete it from the db and quit this method
+			if(n1 < 0) { //if items depleted, delete it from the db and quit this method
 				invRepo.delete(oldItem);
 				return false;
 			}
@@ -290,6 +332,21 @@ public class ApplicationController {
 		return invRepo.getRestInventory(restID);
 	}
 
+	@GetMapping(path = "/cs")
+	public boolean isavailinv(@RequestParam long inventory_id, @RequestParam long needed) {
+		
+		if(invRepo.existsById(inventory_id)) {
+			if(invRepo.getAmount(inventory_id) < needed ) {
+				return false;
+			}
+			else {
+				return true;
+			}
+		}
+		else {
+				return false;
+			}
+	}
 	
 	// -------------------- Menu API's------------------------- //
 	

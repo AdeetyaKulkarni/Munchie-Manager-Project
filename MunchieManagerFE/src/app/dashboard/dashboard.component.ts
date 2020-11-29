@@ -15,6 +15,8 @@ export class DashboardComponent implements OnInit {
   // https://material.angular.io/components/tabs/overview
   // https://www.youtube.com/watch?v=Zk-2CBKiMtU
 
+  Manager = 0
+
   links = [
     { path: 'manager-dashboard', label: 'Manager Dashboard' },
     { path: 'inventory-manager', label: 'Inventory Manager' },
@@ -24,9 +26,24 @@ export class DashboardComponent implements OnInit {
     { path: "menu-creation", label: 'Menu Creation' },
   ];
 
+  links2 = [
+    { path: 'manager-dashboard', label: 'Manager Dashboard' },
+    { path: 'inventory-manager', label: 'Inventory Manager' },
+  ];
+
+  
   constructor(private router : Router ) { }
 
   ngOnInit() {
+
+    let privilege = localStorage.getItem("user_privilege")
+    if(privilege == "0"){
+      this.Manager = 1;
+    }
+    else{
+      this.Manager = 0;
+    }
+
   }
 
   
