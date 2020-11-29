@@ -92,9 +92,9 @@ public class ApplicationController {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 	    Date date = new Date();
 	    
-	    Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	    Format formatter = new SimpleDateFormat("yyyyMMdd");
 	    String s = formatter.format(date);
-	    return s.split(" ")[0];
+	    return s;
 	    
 		
 	}
