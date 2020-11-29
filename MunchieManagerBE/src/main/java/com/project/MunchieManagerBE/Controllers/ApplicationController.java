@@ -485,31 +485,71 @@ public class ApplicationController {
 	// -------------------- Reporting API's------------------------- //
 	
 	@PostMapping(path="/generateReport")
-	public JSONObject GenerateReport(long rest_id, int startdate, int enddate) {
+	public String GenerateReport(long rest_id, int startdate, int enddate) {
 		JSONObject foodPopString = new JSONObject();
 		JSONObject ingPopString = new JSONObject();
 		
+		String Report = "";
+		
 		for ( int i = startdate; i < enddate + 1; i++) {
-			foodPopString = foodPopularity(rest_id, i);
-			ingPopString = ingredientPopularity(rest_id, i);
+			Report += MostPopularItem(rest_id, i);
+			/*foodPopString = foodPopularity(rest_id, i);
+			ingPopString = ingredientPopularity(rest_id, i);*/
 		}
 		
 		
         
+		
 		JSONObject jsonarr = new JSONObject();
 		jsonarr.put("foodPopString", foodPopString);
 		jsonarr.put("inPopString", ingPopString);
 		
-		return jsonarr;
+		return Report;
 	}
 	
 	// -------------------- Dashboard  API's------------------------- //
 	
-	/*public String MostPopularItem() {
-		Date today = Calendar.getInstance().getTime();
-		String todaysDate = new Date().getda
-		return "";
-	}*/
+	public String MostPopularItem(long rest_id) {
+		
+		JSONObject foodPopString = new JSONObject();
+		
+		foodPopString = foodPopularity(rest_id, getDate()); 
+		String Popular = "";
+		int max = 0;
+		
+		String[] keys = (String[]) foodPopString.keySet().toArray();
+		
+		for (int i = 0; i < keys.length; i++) {
+			int temp = (int) foodPopString.get(keys[i]);
+			 if (temp > max) {
+				 Popular = keys[i];
+				 max = temp;
+			 }
+		}
+		
+		return Popular;
+	}
+	
+	public String MostPopularItem(long rest_id, int date) {
+		
+		JSONObject foodPopString = new JSONObject();
+		
+		foodPopString = foodPopularity(rest_id, date); 
+		String Popular = "";
+		int max = 0;
+		
+		String[] keys = (String[]) foodPopString.keySet().toArray();
+		
+		for (int i = 0; i < keys.length; i++) {
+			int temp = (int) foodPopString.get(keys[i]);
+			 if (temp > max) {
+				 Popular = keys[i];
+				 max = temp;
+			 }
+		}
+		
+		return Popular;
+	}
 	
 }
 
