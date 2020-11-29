@@ -112,7 +112,7 @@ export class BaseserviceService {
     }
 
     GetAvailableMenuItems(id){
-      let url = "http://localhost:8080/getAvail?restID="+id
+      let url = "http://localhost:8080/getAvailMenu?restID="+id
       return this.http.get<any>(url)
     }
 
