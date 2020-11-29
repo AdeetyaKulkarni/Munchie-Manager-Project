@@ -18,4 +18,5 @@ public interface MenuRepo extends JpaRepository<Menu_Bean, Long> {
 	
 	//can use the save() method of this class to save a Menu_Bean instance to the table automatically
 	
+	
 }
