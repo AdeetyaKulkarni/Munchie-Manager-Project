@@ -7,6 +7,7 @@ import java.util.Hashtable;
 import java.util.Map;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Calendar;
  
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -400,27 +401,6 @@ public class ApplicationController {
 		}
 		
 		
-		HashMap<String, Object> foodmap = new HashMap<String, Object>();
-		HashMap<String, Object> ingmap = new HashMap<String, Object>();
-        /*
-        ObjectMapper mapper = new ObjectMapper();
-        try
-        {
-            //Convert Map to JSON
-            //foodmap = mapper.readValue(foodPopString, new TypeReference<Map<String, Object>>(){});
-            //ingmap = mapper.readValue(ingPopString, new TypeReference<Map<String, Object>>(){});
-             
-            //Print JSON output
-            
-        } 
-        catch (JsonGenerationException e) {
-            e.printStackTrace();
-        } catch (JsonMappingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        */
         
 		JSONObject jsonarr = new JSONObject();
 		jsonarr.put("foodPopString", foodPopString);
@@ -429,6 +409,13 @@ public class ApplicationController {
 		return jsonarr;
 	}
 	
+	// -------------------- Dashboard  API's------------------------- //
+	
+	/*public String MostPopularItem() {
+		Date today = Calendar.getInstance().getTime();
+		String todaysDate = new Date().getda
+		return "";
+	}*/
 	
 }
 
