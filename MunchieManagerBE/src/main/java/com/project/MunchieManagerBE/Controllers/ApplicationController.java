@@ -88,14 +88,14 @@ public class ApplicationController {
 	}
 
 	@GetMapping(path="/getdate")
-	public String getDate()
+	public Integer getDate()
 	{	
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 	    Date date = new Date();
 	    
 	    Format formatter = new SimpleDateFormat("yyyyMMdd");
 	    String s = formatter.format(date);
-	    return s;
+	    return Integer.parseInt(s);
 	    
 		
 	}
@@ -205,16 +205,29 @@ public class ApplicationController {
 		item.setRest_id(mb.getRest_id());
 		item.setItemname(mb.getName());
 		item.setItemtype(1);
+		item.setDate(getDate());
 		
+		trendsRepo.save(item);
 		
 		
 		for(int i=0; i< mb.getIngredients().length; i++) {
+			
 			Inventory_Bean ib = new Inventory_Bean();
+			Trends_Bean tb = new Trends_Bean();
+			
 			ib = invRepo.FindObject(mb.getIngredients()[i], mb.getRest_id());
 			ib.setAmount(ib.getAmount() - mb.getQuantity()[i]);
+			
+			tb.setRest_id(mb.getRest_id());
+			tb.setItemname(ib.getName());
+			tb.setItemtype(2);
+			tb.setDate(getDate());
+			
 			if(ib.getAmount() < 0) {
 				return false;
 			}
+			
+			trendsRepo.save(tb);
 			invRepo.save(ib);
 		}
 		
