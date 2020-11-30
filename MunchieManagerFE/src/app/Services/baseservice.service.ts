@@ -152,9 +152,15 @@ export class BaseserviceService {
     }
     //------------------------------Reporting API Calls--------------------------------------------------
 
-    Reporting(trends_bean){
-      let url = "http://localhost:8080/generateReport"
-      return this.http.get<any>(url,trends_bean)
+    Reporting(id,startdate,enddate){
+      const params = new HttpParams()
+      .set('rest_id', id)
+      .set('startdate', startdate)
+      .set('enddate', enddate)
+
+     let url = "http:localhost:8080/generateReport"
+     return this.http.get<any>(url, {params});
+
     }
 }
 

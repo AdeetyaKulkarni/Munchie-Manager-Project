@@ -6,7 +6,7 @@
     <!--<label style=" position:relative;float:right;font-family:monospace;letter-spacing:2px;">:Email Report</label>
     <mat-checkbox style=" height:19px;border:1px solid;position:relative;float:right;"></mat-checkbox>-->
     
-    <div class="date-picker center-form1">
+    <!-- <div class="date-picker center-form1">
 
     <h3 class="center-form1"><b style="font-family:monospace; letter-spacing: 2px;">Generate Report</b></h3><br>
     <label class="big">From</label>
@@ -16,9 +16,38 @@
     <input id="to" name="to-dp" [(ngModel)]="to_date" type="date" class="big">
     <p>{{reportstring}}</p>
     </div>
+     -->
     
-    <p class="center-form1"> When submit is clicked it sends the selected dates to user email </p>
+     <div class="date-container">
+        <div>
+            From
+        </div>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Choose a date</mat-label>
+            <input matInput [matDatepicker]="picker" [formControl]="fromDate" (dateChange)="selectEvent($event)">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+    </div>
+
+    <div class="date-container">
+        <div>
+            To
+        </div>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Choose a date</mat-label>
+            <input matInput [matDatepicker]="picker2" [formControl]="toDate" (dateChange)="selectEvent2($event)">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+
+    </div> 
+     <p class="center-form1"> When submit is clicked it sends the selected dates to user email </p>
     <button class="btn btn-success center-form1" (click)="Submit()">Email Report</button>
+    <div *ngIf="reportstring"><p>{{reportstring}}}</p></div>
 
 </div>
 

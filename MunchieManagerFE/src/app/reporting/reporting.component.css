@@ -33,3 +33,21 @@ input {
   margin-left: 12%;
   margin-right: 13%;
 }
+
+.container {
+  padding-left: 125px !important;
+  padding-right: 125px !important;
+  padding-top: 20px !important;
+  padding-bottom: 125px;
+}
+
+.date-container {
+  text-align: -webkit-center;
+  padding-top: 10px;
+}
+
+.mat-form-field {
+  background-color: rgba(0, 0, 0, 0.8);
+  align-self: center !important;
+  color:white;
+}

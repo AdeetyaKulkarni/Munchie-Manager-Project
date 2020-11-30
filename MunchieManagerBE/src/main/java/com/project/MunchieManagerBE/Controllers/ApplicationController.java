@@ -484,7 +484,7 @@ public class ApplicationController {
 
 	// -------------------- Reporting API's------------------------- //
 	
-	@PostMapping(path="/generateReport")
+	@GetMapping(path="/generateReport")
 	public String GenerateReport(@RequestParam long rest_id, @RequestParam int startdate, @RequestParam int enddate) {
 		JSONObject foodPopString = new JSONObject();
 		JSONObject ingPopString = new JSONObject();
