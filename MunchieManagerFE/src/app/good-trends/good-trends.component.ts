@@ -88,6 +88,14 @@ export class GoodTrendsComponent implements OnInit {
       )
       this.showTable = true;
     }
+
+    if(this.response_data) {
+      console.log("got to here");
+      // this.barChartLabels = this.response_data.data.labels
+      // this.barChartData = [
+      //  { data: this.response_data.data, label: 'Menu Item' },
+      // ];
+    }
   }
 
   

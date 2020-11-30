@@ -114,6 +114,15 @@ export class BaseserviceService {
       let url = "http:localhost:8080/getGoodsTrends"
       return this.http.get<any>(url, {params});
     }
+
+    GetRestaurantTrends(id, date) {
+      const params = new HttpParams()
+        .set('rest_id', id)
+        .set('date', date)
+
+      let url = "http:localhost:8080/getRestaurantTrends"
+      return this.http.get<any>(url, {params});
+    }
     
 
 

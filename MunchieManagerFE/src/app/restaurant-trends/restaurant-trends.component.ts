@@ -2,6 +2,9 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 import * as pluginDataLabels from 'chart.js'
 import { Label } from 'ng2-charts';
+import { BaseserviceService } from '../Services/baseservice.service';
+import { DatePipe } from '@angular/common';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-restaurant-trends',
@@ -22,18 +25,13 @@ export class RestaurantTrendsComponent implements OnInit {
       }
     }
   };
-  public barChartLabels: Label[] = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  public barChartLabels: Label[] = ['item 1', 'item 2', 'item 3', 'item 4', 'item 5'];
   public barChartType: ChartType = 'bar';
   public barChartLegend = true;
   public barChartPlugins = [pluginDataLabels];
-  
+
   public barChartData: ChartDataSets[] = [
-    { data: [30, 48, 40, 33, 86, 65, 72], label: 'item 1' },
-    { data: [60, 69, 35, 25, 44, 42, 45], label: 'item 2' },
-    { data: [55, 36, 69, 52, 33, 27, 90], label: 'item 3' },
-    { data: [49, 84, 78, 19, 60, 53, 30], label: 'item 4' },
-    { data: [29, 55, 24, 72, 55, 32, 33], label: 'item 5' },
-    { data: [36, 73, 86, 69, 67, 80, 56], label: 'item 6' },
+    { data: [32, 48, 40, 33, 86], label: 'Menu Item' },
   ];
 
   public chartColors: Array<any> = [
@@ -94,9 +92,42 @@ export class RestaurantTrendsComponent implements OnInit {
       pointHoverBorderColor: 'rgba(51,153,50,0.4)'
     }];
 
-  constructor() { }
+  response_data;
+
+  // Date variables
+  selectedDate: any;
+  selectDate = new FormControl(new Date());
+
+  showTable = false;
+
+  constructor(private service: BaseserviceService, private datePipe: DatePipe) { }
 
   ngOnInit() {
+  }
+
+
+  selectEvent(event: any) {
+    this.selectedDate = this.datePipe.transform(this.selectDate.value, "yyyyMMdd");
+    this.selectedDate = Number(this.selectedDate);
+
+    if (event) {
+      this.service.GetRestaurantTrends(localStorage.getItem("user_id"), this.selectedDate).subscribe(
+        response => {
+          this.response_data = response;
+          console.log(response);
+        },
+        error => { console.log(error) }
+      )
+      this.showTable = true;
+    }
+
+    if(this.response_data) {
+      console.log("got to here");
+      // this.barChartLabels = this.response_data.data.labels
+      // this.barChartData = [
+      //  { data: this.response_data.data, label: 'Menu Item' },
+      // ];
+    }
   }
 
 }
