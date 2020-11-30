@@ -128,7 +128,12 @@ export class BaseserviceService {
       let url = "http://localhost:8080/order"
       return this.http.post<any>(url, menu_item)
     }
+    //------------------------------Reporting API Calls--------------------------------------------------
 
+    Reporting(trends_bean){
+      let url = "http://localhost:8080/generateReport"
+      return this.http.get<any>(url,trends_bean)
+    }
 }
 
 

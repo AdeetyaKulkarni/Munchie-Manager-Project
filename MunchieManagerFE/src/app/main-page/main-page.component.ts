@@ -42,6 +42,14 @@ export class Menu_Bean{constructor(
   visible: boolean,
 ){}}
 
+export class Trends_Bean{constructor(
+  id: number,
+  rest_id: number,
+  itemname: string,
+  itemtype: number,
+  date: string,
+){}}
+
 @Component({
   selector: 'app-main-page',
   templateUrl: './main-page.component.html',
