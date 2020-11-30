@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Employee_Bean, Inventory_Bean } from '../main-page/main-page.component';
 
@@ -104,6 +104,28 @@ export class BaseserviceService {
 
     }
 
+    //------------------------------Trends API Calls-------------------------------------------------------
+
+    GetGoodTrends(id, date) {
+      const params = new HttpParams()
+        .set('rest_id', id)
+        .set('date', date)
+
+      let url = "http:localhost:8080/getGoodsTrends"
+      return this.http.get<any>(url, {params});
+    }
+
+    GetRestaurantTrends(id, date) {
+      const params = new HttpParams()
+        .set('rest_id', id)
+        .set('date', date)
+
+      let url = "http:localhost:8080/getRestaurantTrends"
+      return this.http.get<any>(url, {params});
+    }
+    
+
+
     //------------------------------Menu API Calls--------------------------------------------------
 
     GetMenuItems(id){
@@ -112,7 +134,7 @@ export class BaseserviceService {
     }
 
     GetAvailableMenuItems(id){
-      let url = "http://localhost:8080/getAvail?restID="+id
+      let url = "http://localhost:8080/getAvailMenu?restID="+id
       return this.http.get<any>(url)
     }
 

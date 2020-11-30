@@ -2,6 +2,9 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 import * as pluginDataLabels from 'chart.js'
 import { Label } from 'ng2-charts';
+import { BaseserviceService } from '../Services/baseservice.service';
+import { DatePipe } from '@angular/common';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-good-trends',
@@ -13,6 +16,11 @@ export class GoodTrendsComponent implements OnInit {
   // charts created following this guide 
   // https://medium.com/codingthesmartway-com-blog/angular-chart-js-with-ng2-charts-e21c8262777f
   // https://stackoverflow.com/questions/39832874/how-do-i-change-the-color-for-ng2-charts
+  // date found from stackoverflow
+  // https://stackoverflow.com/questions/55311355/how-to-pass-only-date-from-angular-6-to-web-api
+  // https://angular.io/api/common/DatePipe
+  
+  manager_privilege = 0;
 
   public barChartOptions: ChartOptions = {
     responsive: true,
@@ -53,10 +61,44 @@ export class GoodTrendsComponent implements OnInit {
     }];
 
   public item: string = "inventory item";
+
+  response_data;
+
+  // Date variables
+  selectedDate : any;
+  selectDate = new FormControl(new Date());
+
+  showTable = false;
   
-  constructor() { }
+  constructor(private service: BaseserviceService, private datePipe: DatePipe) { }
   
-  ngOnInit() {
+  ngOnInit() {}
+
+  selectEvent(event: any) {
+    this.selectedDate = this.datePipe.transform(this.selectDate.value, "yyyyMMdd");
+    this.selectedDate = Number(this.selectedDate);
+
+    if (event) {
+      this.service.GetGoodTrends(localStorage.getItem("user_id"), this.selectedDate).subscribe(
+        response => {
+          this.response_data = response;
+          console.log(response);
+        },
+        error => {console.log(error)}
+      )
+      this.showTable = true;
+    }
+
+    if(this.response_data) {
+      console.log("got to here");
+      // this.barChartLabels = this.response_data.data.labels
+      // this.barChartData = [
+      //  { data: this.response_data.data, label: 'Menu Item' },
+      // ];
+    }
   }
 
+  
+ 
 }
+

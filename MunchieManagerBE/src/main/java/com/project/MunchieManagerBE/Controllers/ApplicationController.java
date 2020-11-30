@@ -1,12 +1,19 @@
 package com.project.MunchieManagerBE.Controllers;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Date;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Optional;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.Calendar;
  
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -80,6 +87,19 @@ public class ApplicationController {
 		
 	}
 
+	@GetMapping(path="/getdate")
+	public Integer getDate()
+	{	
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+	    Date date = new Date();
+	    
+	    Format formatter = new SimpleDateFormat("yyyyMMdd");
+	    String s = formatter.format(date);
+	    return Integer.parseInt(s);
+	    
+		
+	}
+	
 	
 	// -----------------LOGIN API---------------------------------//
 	
@@ -108,6 +128,7 @@ public class ApplicationController {
 				obj.put("id", result.getId());
 				obj.put("firstname", result.getFirstname());
 				obj.put("privilege", result.getprivilege());
+				obj.put("rest_name", result.getRestaurant_name());
 				return obj;
 		}
 		
@@ -179,10 +200,34 @@ public class ApplicationController {
 	@PostMapping(path="/order") 
 	public boolean order(@RequestBody Menu_Bean mb) {
 		
+		Trends_Bean item = new Trends_Bean();
+		
+		item.setRest_id(mb.getRest_id());
+		item.setItemname(mb.getName());
+		item.setItemtype(1);
+		item.setDate(getDate());
+		
+		trendsRepo.save(item);
+		
+		
 		for(int i=0; i< mb.getIngredients().length; i++) {
+			
 			Inventory_Bean ib = new Inventory_Bean();
+			Trends_Bean tb = new Trends_Bean();
+			
 			ib = invRepo.FindObject(mb.getIngredients()[i], mb.getRest_id());
 			ib.setAmount(ib.getAmount() - mb.getQuantity()[i]);
+			
+			tb.setRest_id(mb.getRest_id());
+			tb.setItemname(ib.getName());
+			tb.setItemtype(2);
+			tb.setDate(getDate());
+			
+			if(ib.getAmount() < 0) {
+				return false;
+			}
+			
+			trendsRepo.save(tb);
 			invRepo.save(ib);
 		}
 		
@@ -246,6 +291,41 @@ public class ApplicationController {
 		return menuRepo.restMenu(restID);
 	}
 	
+	@GetMapping(path="/getAvailMenu")
+	public List<Menu_Bean> getAvailMenuItemsforRestID(@RequestParam long restID){
+		
+		List<Menu_Bean> allmenu = menuRepo.restMenu(restID);
+	    ArrayList<Long> removal_index = new ArrayList<Long>();
+	    
+	    for(int i=0; i< ((allmenu.size())); i++) {
+			 long[] ingrelist = allmenu.get(i).getIngredients();
+			 int[] quantlist = allmenu.get(i).getQuantity();
+			 for(int j=0; j<((ingrelist.length)); j++) {
+				 if(this.isavailinv(ingrelist[j], quantlist[j]) == false) {
+					 removal_index.add(allmenu.get(i).getId());
+					 break;
+				 }
+			 }
+		}
+	    
+	   
+        Iterator<Menu_Bean> itr = allmenu.iterator();
+        while(itr.hasNext()) {
+        	Menu_Bean mb = itr.next();
+        	for(int i=0; i<removal_index.size(); i++) {
+        		if(mb.getId() == removal_index.get(i)) {
+        			itr.remove();
+        			break;
+        		}
+        	}
+        	
+        }
+        
+
+	    
+	    return allmenu;
+	}
+	
 	// --------------------Inventory API's-----------------------------//
 	
 	@PostMapping(path="/addInvItem")
@@ -272,7 +352,7 @@ public class ApplicationController {
 		
 		if(oldItem != null) {
 			int n1 = oldItem.getAmount() - inv.getAmount();
-			if(n1 < 1) { //if items depleted, delete it from the db and quit this method
+			if(n1 < 0) { //if items depleted, delete it from the db and quit this method
 				invRepo.delete(oldItem);
 				return false;
 			}
@@ -285,14 +365,26 @@ public class ApplicationController {
 		return false;
 	}
 	
-
 	@GetMapping(path="/getRestInv")
 	public List<Inventory_Bean> getRestInv(@RequestParam long restID){
 		return invRepo.getRestInventory(restID);
 	}
-	
-	
 
+	@GetMapping(path = "/cs")
+	public boolean isavailinv(@RequestParam long inventory_id, @RequestParam long needed) {
+		
+		if(invRepo.existsById(inventory_id)) {
+			if(invRepo.getAmount(inventory_id) < needed ) {
+				return false;
+			}
+			else {
+				return true;
+			}
+		}
+		else {
+				return false;
+			}
+	}
 	
 	// -------------------- Menu API's------------------------- //
 	
@@ -324,106 +416,188 @@ public class ApplicationController {
 	}
 	
 	@GetMapping(path="/getRestaurantTrends")
-	public String foodPopularity(long rest_id, String startdate, String enddate) {
+	public JSONObject foodPopularity(@RequestParam long rest_id, @RequestParam int date) {
 		
-		List<String> trendsName = trendsRepo.RetrieveItemNameByDate(rest_id, startdate, enddate, 1);
+		List<String> trendsName = trendsRepo.RetrieveItemNameByDate(rest_id, date, 1);
+		JSONObject json = new JSONObject();
 		
 		if (trendsName.size() == 0) {
-			return "{}";
+			return json;
 		}
 		
-		Hashtable<String, Integer> dict = new Hashtable<String, Integer>();
+		//Hashtable<String, Integer> dict = new Hashtable<String, Integer>();
 		
 		for (int i = 0; i < trendsName.size(); i++) {
-			if (!dict.containsKey(trendsName.get(i))) {
-				dict.put(trendsName.get(i), 1);
+			if (!json.containsKey(trendsName.get(i))) {
+				json.put(trendsName.get(i), 1);
 			}
 			else {
-				dict.put(trendsName.get(i), dict.get(trendsName.get(i)) + 1);
+				int temp = (int) json.get(trendsName.get(i));
+				json.put(trendsName.get(i), temp + 1);
 			}
 		}
 		
-		String[] listString = (String[]) dict.keySet().toArray(); 
+		/*String[] listString = (String[]) dict.keySet().toArray(); 
 		String Result = "{ ";
 		
 		for (int i = 0; i < dict.size(); i++) {
 			Result += "\"" + listString[0] + "\":" + " \"" + dict.get(listString[0]) + "\", \n";  
 		}
 		
-		Result += "}";
+		Result += "}";*/
 		
-		return Result;
+		return json;
 	}
 	
 	@GetMapping(path="/getGoodsTrends")
-	public String ingredientPopularity(long rest_id, String startdate, String enddate) {
+	public JSONObject ingredientPopularity(@RequestParam long rest_id, @RequestParam int date) {
 		
-		List<String> trendsName = trendsRepo.RetrieveItemNameByDate(rest_id, startdate, enddate, 2);
+		List<String> trendsName = trendsRepo.RetrieveItemNameByDate(rest_id, date, 2);
+		JSONObject json = new JSONObject();
 		
 		if (trendsName.size() == 0) {
-			return "{}";
+			return json;
 		}
 		
-		Hashtable<String, Integer> dict = new Hashtable<String, Integer>();
+		//Hashtable<String, Integer> dict = new Hashtable<String, Integer>();
 		
 		for (int i = 0; i < trendsName.size(); i++) {
-			if (!dict.containsKey(trendsName.get(i))) {
-				dict.put(trendsName.get(i), 1);
+			if (!json.containsKey(trendsName.get(i))) {
+				json.put(trendsName.get(i), 1);
 			}
 			else {
-				dict.put(trendsName.get(i), dict.get(trendsName.get(i)) + 1);
+				json.put(trendsName.get(i), (int) json.get(trendsName.get(i)) + 1);
 			}
 		}
 		
-		String[] listString = (String[]) dict.keySet().toArray(); 
+		/*String[] listString = (String[]) dict.keySet().toArray(); 
 		String Result = "{ ";
 		
 		for (int i = 0; i < dict.size(); i++) {
 			Result += "\"" + listString[0] + "\":" + " \"" + dict.get(listString[0]) + "\", \n";  
 		}
 		
-		Result += "}";
+		Result += "}";*/
 		
-		return Result;
+		return json;
 	}
 
 	// -------------------- Reporting API's------------------------- //
 	
 	@PostMapping(path="/generateReport")
-	public JSONObject GenerateReport(long rest_id, String startdate, String enddate) {
+	public String GenerateReport(@RequestParam long rest_id, @RequestParam int startdate, @RequestParam int enddate) {
+		JSONObject foodPopString = new JSONObject();
+		JSONObject ingPopString = new JSONObject();
 		
-		String foodPopString = foodPopularity(rest_id, startdate, enddate);
-		String ingPopString = ingredientPopularity(rest_id, startdate, enddate);
+		String Report = "";
 		
-		HashMap<String, Object> foodmap = new HashMap<String, Object>();
-		HashMap<String, Object> ingmap = new HashMap<String, Object>();
-        /*
-        ObjectMapper mapper = new ObjectMapper();
-        try
-        {
-            //Convert Map to JSON
-            //foodmap = mapper.readValue(foodPopString, new TypeReference<Map<String, Object>>(){});
-            //ingmap = mapper.readValue(ingPopString, new TypeReference<Map<String, Object>>(){});
-             
-            //Print JSON output
-            
-        } 
-        catch (JsonGenerationException e) {
-            e.printStackTrace();
-        } catch (JsonMappingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        */
+		for ( int i = startdate; i < enddate + 1; i++) {
+			Report += "Most Popular Item on " + i + ": " + MostPopularItem(rest_id, i) + "\n";
+			Report += "Most Used Ingredient on " + i + ": " + MostUsedIngredient(rest_id, i) + "\n";
+			Report += "\n";
+			/*foodPopString = foodPopularity(rest_id, i);
+			ingPopString = ingredientPopularity(rest_id, i);*/
+		}
+		
+		
         
-		JSONObject jsonarr = new JSONObject();
-		jsonarr.put("foodPopString", foodPopString);
-		jsonarr.put("inPopString", ingPopString);
 		
-		return jsonarr;
+		/*JSONObject jsonarr = new JSONObject();
+		jsonarr.put("foodPopString", foodPopString);
+		jsonarr.put("inPopString", ingPopString);*/
+		
+		return Report;
 	}
 	
+	// -------------------- Dashboard  API's------------------------- //
+	
+	@GetMapping(path="/MostPopularToday")
+	public String MostPopularItem(@RequestParam long rest_id) {
+		
+		JSONObject foodPopString = new JSONObject();
+		
+		foodPopString = foodPopularity(rest_id, getDate()); 
+		String Popular = "";
+		int max = 0;
+		
+		String[] keys = (String[]) foodPopString.keySet().toArray();
+		
+		for (int i = 0; i < keys.length; i++) {
+			int temp = (int) foodPopString.get(keys[i]);
+			 if (temp > max) {
+				 Popular = keys[i];
+				 max = temp;
+			 }
+		}
+		
+		return Popular;
+	}
+	
+	@GetMapping(path="/MostPopularByDay")
+	public String MostPopularItem(@RequestParam long rest_id, @RequestParam int date) {
+		
+		JSONObject foodPopString = new JSONObject();
+		
+		foodPopString = foodPopularity(rest_id, date); 
+		String Popular = "";
+		int max = 0;
+		
+		String[] keys = (String[]) foodPopString.keySet().toArray();
+		
+		for (int i = 0; i < keys.length; i++) {
+			int temp = (int) foodPopString.get(keys[i]);
+			 if (temp > max) {
+				 Popular = keys[i];
+				 max = temp;
+			 }
+		}
+		
+		return Popular;
+	}
+	
+	@GetMapping(path="/MostUsedIngredientToday")
+	public String MostUsedIngredient(@RequestParam long rest_id) {
+		
+		JSONObject ingPopString = new JSONObject();
+		
+		ingPopString = ingredientPopularity(rest_id, getDate()); 
+		String Popular = "";
+		int max = 0;
+		
+		String[] keys = (String[]) ingPopString.keySet().toArray();
+		
+		for (int i = 0; i < keys.length; i++) {
+			int temp = (int) ingPopString.get(keys[i]);
+			 if (temp > max) {
+				 Popular = keys[i];
+				 max = temp;
+			 }
+		}
+		
+		return Popular;
+	}
+	
+	@GetMapping(path="/MostPopularIngredientByDay")
+	public String MostUsedIngredient(@RequestParam long rest_id, @RequestParam int date) {
+		
+		JSONObject ingPopString = new JSONObject();
+		
+		ingPopString = ingredientPopularity(rest_id, getDate()); 
+		String Popular = "";
+		int max = 0;
+		
+		String[] keys = (String[]) ingPopString.keySet().toArray();
+		
+		for (int i = 0; i < keys.length; i++) {
+			int temp = (int) ingPopString.get(keys[i]);
+			 if (temp > max) {
+				 Popular = keys[i];
+				 max = temp;
+			 }
+		}
+		
+		return Popular;
+	}
 	
 }
 

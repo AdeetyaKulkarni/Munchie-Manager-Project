@@ -33,8 +33,12 @@ export class LoginPageComponent implements OnInit {
             localStorage.setItem('login-status', '1');
             localStorage.setItem('username', response["firstname"]);
             localStorage.setItem('user_id', response["id"]);
-            if(privilege <= 1){
+            if(privilege == 0){
+              this.router.navigate(["dashboard/manager-dashboard"]);
+            }
+            else if(privilege == 1){
               //EMPLOYEE
+              localStorage.setItem("user_id", response["rest_name"]);
               this.router.navigate(["dashboard/manager-dashboard"]);
             }
             else{
