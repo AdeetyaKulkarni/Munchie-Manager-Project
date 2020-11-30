@@ -14,10 +14,6 @@ import { BaseserviceService } from '../Services/baseservice.service';
 export class ReportingComponent implements OnInit {
 
   reportstring: string;
-  //from_date = new FormControl(new Date());;
-  //to_date = new FormControl(new Date());;
-  // from_date;
-  // to_date;
   cur_rest_id;
   fromdate: any;
   todate: any;
@@ -37,29 +33,6 @@ export class ReportingComponent implements OnInit {
 
   ngOnInit() {
      this.cur_rest_id = localStorage.getItem("user_id");
-    // this.fromdate = this.datePipe.transform(this.from_date.value, "yyyyMMdd");
-    // this.fromdate = Number(this.fromdate);
-    // this.todate = this.datePipe.transform(this.to_date.value, "yyyyMMdd");
-    // this.todate = Number(this.todate)
-    
-  }
-
-
-
-
-
-  Reporting(){
-    this.trends_bean["rest_id"] = this.cur_rest_id;
-    this.trends_bean["date"] = this.fromdate;
-    this.trends_bean["date"] = this.todate;
-
-    this.service.AddMenuItem(this.trends_bean).subscribe(
-      response => { this.reportstring = "bitches";
-                    console.log(response)          
-                    this.ngOnInit()
-                  },
-      error => {alert("BAD API")}
-    )
   }
 
   Submit()
@@ -67,10 +40,7 @@ export class ReportingComponent implements OnInit {
     console.log(this.from_date)
     console.log(this.to_date)
     this.service.Reporting(this.cur_rest_id,this.from_date,this.to_date ).subscribe(
-      response => { this.reportstring = response;
-      console.log(response)          
-      //this.ngOnInit()
-    },
+      response => {this.reportstring = response["report"]},
       error => {alert("BAD API")}
     )
 

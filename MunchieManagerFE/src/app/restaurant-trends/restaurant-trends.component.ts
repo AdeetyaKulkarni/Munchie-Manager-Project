@@ -115,6 +115,10 @@ export class RestaurantTrendsComponent implements OnInit {
         response => {
           this.response_data = response;
           console.log(response);
+          this.barChartLabels = this.response_data["keys"]
+          this.barChartData = [
+        { data: this.response_data["values"], label: 'Menu Item' },
+       ];
         },
         error => { console.log(error) }
       )

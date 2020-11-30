@@ -421,6 +421,9 @@ public class ApplicationController {
 		List<String> trendsName = trendsRepo.RetrieveItemNameByDate(rest_id, date, 1);
 		JSONObject json = new JSONObject();
 		
+		ArrayList<String> keys = new ArrayList<String>();
+		ArrayList<Integer> values = new ArrayList<Integer>();
+		
 		if (trendsName.size() == 0) {
 			return json;
 		}
@@ -436,7 +439,21 @@ public class ApplicationController {
 			}
 		}
 		
-		return json;
+
+		for (Object key : json.keySet()) {
+	        String keyStr = (String)key;
+	        keys.add(keyStr);        
+	        values.add((Integer) json.get(keyStr));	     	 
+	    }
+		
+		JSONObject ret = new JSONObject();
+		
+		ret.put("keys", keys);
+		ret.put("values", values);
+		
+		
+		return ret;
+		
 	}
 	
 	@GetMapping(path="/getGoodsTrends")
@@ -445,6 +462,10 @@ public class ApplicationController {
 		List<String> trendsName = trendsRepo.RetrieveItemNameByDate(rest_id, date, 2);
 		JSONObject json = new JSONObject();
 		
+		ArrayList<String> keys = new ArrayList<String>();
+		ArrayList<Integer> values = new ArrayList<Integer>();
+		
+		
 		if (trendsName.size() == 0) {
 			return json;
 		}
@@ -459,14 +480,29 @@ public class ApplicationController {
 			}
 		}
 		
+		for (Object key : json.keySet()) {
+	        String keyStr = (String)key;
+	        keys.add(keyStr);        
+	        values.add((Integer) json.get(keyStr));	     	 
+	    }
 		
-		return json;
+		JSONObject ret = new JSONObject();
+		
+		ret.put("keys", keys);
+		ret.put("values", values);
+		
+		
+		return ret;
+		
 	}
 
 	// -------------------- Reporting API's------------------------- //
 	
 	@GetMapping(path="/generateReport")
-	public String GenerateReport(@RequestParam long rest_id, @RequestParam int startdate, @RequestParam int enddate) {
+	public JSONObject GenerateReport(@RequestParam long rest_id, @RequestParam int startdate, @RequestParam int enddate) {
+		
+		JSONObject reportObj = new JSONObject();
+		
 		JSONObject foodPopString = new JSONObject();
 		JSONObject ingPopString = new JSONObject();
 		
@@ -478,7 +514,9 @@ public class ApplicationController {
 			Report += "\n";
 		}
 		
-		return Report;
+		reportObj.put("report", Report);
+		
+		return reportObj;
 	}
 	
 	// -------------------- Dashboard  API's------------------------- //
@@ -505,8 +543,7 @@ public class ApplicationController {
 		return Popular;
 	}
 	
-	@GetMapping(path="/MostPopularByDay")
-	public String MostPopularItem(@RequestParam long rest_id, @RequestParam int date) {
+	public String MostPopularItem(long rest_id, int date) {
 		
 		JSONObject foodPopString = new JSONObject();
 		
@@ -549,8 +586,7 @@ public class ApplicationController {
 		return Popular;
 	}
 	
-	@GetMapping(path="/MostPopularIngredientByDay")
-	public String MostUsedIngredient(@RequestParam long rest_id, @RequestParam int date) {
+	public String MostUsedIngredient( long rest_id, int date) {
 		
 		JSONObject foodPopString = new JSONObject();
 		

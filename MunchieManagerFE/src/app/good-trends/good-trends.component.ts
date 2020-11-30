@@ -83,18 +83,15 @@ export class GoodTrendsComponent implements OnInit {
         response => {
           this.response_data = response;
           console.log(response);
+       this.barChartLabels = this.response_data["keys"]
+       this.barChartData = [
+        { data: this.response_data["values"], label: 'Menu Item' },
+       ];
+
         },
         error => {console.log(error)}
       )
       this.showTable = true;
-    }
-
-    if(this.response_data) {
-      console.log("got to here");
-      // this.barChartLabels = this.response_data.data.labels
-      // this.barChartData = [
-      //  { data: this.response_data.data, label: 'Menu Item' },
-      // ];
     }
   }
 

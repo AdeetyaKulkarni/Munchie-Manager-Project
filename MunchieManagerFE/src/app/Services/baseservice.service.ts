@@ -111,7 +111,7 @@ export class BaseserviceService {
         .set('rest_id', id)
         .set('date', date)
 
-      let url = "http:localhost:8080/getGoodsTrends"
+      let url = "http://localhost:8080/getGoodsTrends"
       return this.http.get<any>(url, {params});
     }
 
@@ -120,7 +120,7 @@ export class BaseserviceService {
         .set('rest_id', id)
         .set('date', date)
 
-      let url = "http:localhost:8080/getRestaurantTrends"
+      let url = "http://localhost:8080/getRestaurantTrends"
       return this.http.get<any>(url, {params});
     }
     
@@ -153,13 +153,9 @@ export class BaseserviceService {
     //------------------------------Reporting API Calls--------------------------------------------------
 
     Reporting(id,startdate,enddate){
-      const params = new HttpParams()
-      .set('rest_id', id)
-      .set('startdate', startdate)
-      .set('enddate', enddate)
-
-     let url = "http:localhost:8080/generateReport"
-     return this.http.get<any>(url, {params});
+    
+     let url = "http://localhost:8080/generateReport?rest_id="+id+"&startdate="+startdate+"&enddate="+enddate
+     return this.http.get<any>(url);
 
     }
 }
