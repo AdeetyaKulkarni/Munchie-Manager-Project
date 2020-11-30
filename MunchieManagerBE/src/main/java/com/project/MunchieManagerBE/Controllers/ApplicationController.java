@@ -425,7 +425,6 @@ public class ApplicationController {
 			return json;
 		}
 		
-		//Hashtable<String, Integer> dict = new Hashtable<String, Integer>();
 		
 		for (int i = 0; i < trendsName.size(); i++) {
 			if (!json.containsKey(trendsName.get(i))) {
@@ -436,15 +435,6 @@ public class ApplicationController {
 				json.put(trendsName.get(i), temp + 1);
 			}
 		}
-		
-		/*String[] listString = (String[]) dict.keySet().toArray(); 
-		String Result = "{ ";
-		
-		for (int i = 0; i < dict.size(); i++) {
-			Result += "\"" + listString[0] + "\":" + " \"" + dict.get(listString[0]) + "\", \n";  
-		}
-		
-		Result += "}";*/
 		
 		return json;
 	}
@@ -459,32 +449,23 @@ public class ApplicationController {
 			return json;
 		}
 		
-		//Hashtable<String, Integer> dict = new Hashtable<String, Integer>();
-		
 		for (int i = 0; i < trendsName.size(); i++) {
 			if (!json.containsKey(trendsName.get(i))) {
 				json.put(trendsName.get(i), 1);
 			}
 			else {
-				json.put(trendsName.get(i), (int) json.get(trendsName.get(i)) + 1);
+				int temp = (int) json.get(trendsName.get(i));
+				json.put(trendsName.get(i), temp + 1);
 			}
 		}
 		
-		/*String[] listString = (String[]) dict.keySet().toArray(); 
-		String Result = "{ ";
-		
-		for (int i = 0; i < dict.size(); i++) {
-			Result += "\"" + listString[0] + "\":" + " \"" + dict.get(listString[0]) + "\", \n";  
-		}
-		
-		Result += "}";*/
 		
 		return json;
 	}
 
 	// -------------------- Reporting API's------------------------- //
 	
-	@PostMapping(path="/generateReport")
+	@GetMapping(path="/generateReport")
 	public String GenerateReport(@RequestParam long rest_id, @RequestParam int startdate, @RequestParam int enddate) {
 		JSONObject foodPopString = new JSONObject();
 		JSONObject ingPopString = new JSONObject();
@@ -495,16 +476,7 @@ public class ApplicationController {
 			Report += "Most Popular Item on " + i + ": " + MostPopularItem(rest_id, i) + "\n";
 			Report += "Most Used Ingredient on " + i + ": " + MostUsedIngredient(rest_id, i) + "\n";
 			Report += "\n";
-			/*foodPopString = foodPopularity(rest_id, i);
-			ingPopString = ingredientPopularity(rest_id, i);*/
 		}
-		
-		
-        
-		
-		/*JSONObject jsonarr = new JSONObject();
-		jsonarr.put("foodPopString", foodPopString);
-		jsonarr.put("inPopString", ingPopString);*/
 		
 		return Report;
 	}
@@ -520,15 +492,15 @@ public class ApplicationController {
 		String Popular = "";
 		int max = 0;
 		
-		String[] keys = (String[]) foodPopString.keySet().toArray();
-		
-		for (int i = 0; i < keys.length; i++) {
-			int temp = (int) foodPopString.get(keys[i]);
+		for (Object key : foodPopString.keySet()) {
+	        String keyStr = (String)key;
+	        	
+	        int temp = (int) foodPopString.get(keyStr);
 			 if (temp > max) {
-				 Popular = keys[i];
+				 Popular = keyStr;
 				 max = temp;
 			 }
-		}
+	    }
 		
 		return Popular;
 	}
@@ -542,15 +514,15 @@ public class ApplicationController {
 		String Popular = "";
 		int max = 0;
 		
-		String[] keys = (String[]) foodPopString.keySet().toArray();
-		
-		for (int i = 0; i < keys.length; i++) {
-			int temp = (int) foodPopString.get(keys[i]);
+		for (Object key : foodPopString.keySet()) {
+	        String keyStr = (String)key;
+	        	
+	        int temp = (int) foodPopString.get(keyStr);
 			 if (temp > max) {
-				 Popular = keys[i];
+				 Popular = keyStr;
 				 max = temp;
 			 }
-		}
+	    }
 		
 		return Popular;
 	}
@@ -558,21 +530,21 @@ public class ApplicationController {
 	@GetMapping(path="/MostUsedIngredientToday")
 	public String MostUsedIngredient(@RequestParam long rest_id) {
 		
-		JSONObject ingPopString = new JSONObject();
+		JSONObject foodPopString = new JSONObject();
 		
-		ingPopString = ingredientPopularity(rest_id, getDate()); 
+		foodPopString = ingredientPopularity(rest_id, getDate()); 
 		String Popular = "";
 		int max = 0;
 		
-		String[] keys = (String[]) ingPopString.keySet().toArray();
-		
-		for (int i = 0; i < keys.length; i++) {
-			int temp = (int) ingPopString.get(keys[i]);
+		for (Object key : foodPopString.keySet()) {
+	        String keyStr = (String)key;
+	        	
+	        int temp = (int) foodPopString.get(keyStr);
 			 if (temp > max) {
-				 Popular = keys[i];
+				 Popular = keyStr;
 				 max = temp;
 			 }
-		}
+	    }
 		
 		return Popular;
 	}
@@ -580,21 +552,21 @@ public class ApplicationController {
 	@GetMapping(path="/MostPopularIngredientByDay")
 	public String MostUsedIngredient(@RequestParam long rest_id, @RequestParam int date) {
 		
-		JSONObject ingPopString = new JSONObject();
+		JSONObject foodPopString = new JSONObject();
 		
-		ingPopString = ingredientPopularity(rest_id, getDate()); 
+		foodPopString = ingredientPopularity(rest_id, date); 
 		String Popular = "";
 		int max = 0;
 		
-		String[] keys = (String[]) ingPopString.keySet().toArray();
-		
-		for (int i = 0; i < keys.length; i++) {
-			int temp = (int) ingPopString.get(keys[i]);
+		for (Object key : foodPopString.keySet()) {
+	        String keyStr = (String)key;
+	        	
+	        int temp = (int) foodPopString.get(keyStr);
 			 if (temp > max) {
-				 Popular = keys[i];
+				 Popular = keyStr;
 				 max = temp;
 			 }
-		}
+	    }
 		
 		return Popular;
 	}
