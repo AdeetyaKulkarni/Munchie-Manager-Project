@@ -158,6 +158,22 @@ export class BaseserviceService {
      return this.http.get<any>(url);
 
     }
+
+    //--------------------------------Dashboard API----------------------------------------------------
+
+    MostPopularItem(id){
+
+      let url = "http://localhost:8080/MostPopularToday?rest_id="+id
+      return this.http.get<any>(url);
+
+    }
+
+    MostUsedIngr(id){
+
+      let url = "http://localhost:8080/MostUsedIngredientToday?rest_id="+id
+      return this.http.get<any>(url);
+
+    }
 }
 
 

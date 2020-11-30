@@ -11,6 +11,8 @@ import { BaseserviceService } from '../Services/baseservice.service';
 export class ManagerDashboardComponent implements OnInit {
 
   //NGIF vars
+  mpi = ""
+  mui = ""
   username = localStorage.getItem("username");
   manager_privilege = 0
   edit_mode = 0
@@ -39,7 +41,24 @@ export class ManagerDashboardComponent implements OnInit {
         error => {alert("BAD API")}
       )
     }
+
+    this.service.MostPopularItem(localStorage.getItem("user_id")).subscribe(
+      response => {
+        this.mpi = response["key"];
+      },
+      error => {alert("BAD API")}
+    )
+
+    this.service.MostUsedIngr(localStorage.getItem("user_id")).subscribe(
+      response => {
+        this.mui = response["key"];
+      },
+      error => {alert("BAD API")}
+    )
+
+
   }
+   
 
   Register_employee()
   {

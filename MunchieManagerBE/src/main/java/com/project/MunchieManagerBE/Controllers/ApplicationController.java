@@ -415,8 +415,37 @@ public class ApplicationController {
 		return true;
 	}
 	
-	@GetMapping(path="/getRestaurantTrends")
+	@GetMapping(path="/getRestaurantTrends1")
 	public JSONObject foodPopularity(@RequestParam long rest_id, @RequestParam int date) {
+		
+		List<String> trendsName = trendsRepo.RetrieveItemNameByDate(rest_id, date, 1);
+		JSONObject json = new JSONObject();
+		
+		ArrayList<String> keys = new ArrayList<String>();
+		ArrayList<Integer> values = new ArrayList<Integer>();
+		
+		if (trendsName.size() == 0) {
+			return json;
+		}
+		
+		
+		for (int i = 0; i < trendsName.size(); i++) {
+			if (!json.containsKey(trendsName.get(i))) {
+				json.put(trendsName.get(i), 1);
+			}
+			else {
+				int temp = (int) json.get(trendsName.get(i));
+				json.put(trendsName.get(i), temp + 1);
+			}
+		}
+		
+		
+		return json;
+		
+	}
+	
+	@GetMapping(path="/getRestaurantTrends")
+	public JSONObject foodPopularity1(@RequestParam long rest_id, @RequestParam int date) {
 		
 		List<String> trendsName = trendsRepo.RetrieveItemNameByDate(rest_id, date, 1);
 		JSONObject json = new JSONObject();
@@ -456,8 +485,36 @@ public class ApplicationController {
 		
 	}
 	
-	@GetMapping(path="/getGoodsTrends")
+	@GetMapping(path="/getGoodsTrends1")
 	public JSONObject ingredientPopularity(@RequestParam long rest_id, @RequestParam int date) {
+		
+		List<String> trendsName = trendsRepo.RetrieveItemNameByDate(rest_id, date, 2);
+		JSONObject json = new JSONObject();
+		
+		ArrayList<String> keys = new ArrayList<String>();
+		ArrayList<Integer> values = new ArrayList<Integer>();
+		
+		
+		if (trendsName.size() == 0) {
+			return json;
+		}
+		
+		for (int i = 0; i < trendsName.size(); i++) {
+			if (!json.containsKey(trendsName.get(i))) {
+				json.put(trendsName.get(i), 1);
+			}
+			else {
+				int temp = (int) json.get(trendsName.get(i));
+				json.put(trendsName.get(i), temp + 1);
+			}
+		}
+
+		return json;
+		
+	}
+	
+	@GetMapping(path="/getGoodsTrends")
+	public JSONObject ingredientPopularity1(@RequestParam long rest_id, @RequestParam int date) {
 		
 		List<String> trendsName = trendsRepo.RetrieveItemNameByDate(rest_id, date, 2);
 		JSONObject json = new JSONObject();
@@ -496,6 +553,8 @@ public class ApplicationController {
 		
 	}
 
+	
+
 	// -------------------- Reporting API's------------------------- //
 	
 	@GetMapping(path="/generateReport")
@@ -522,7 +581,7 @@ public class ApplicationController {
 	// -------------------- Dashboard  API's------------------------- //
 	
 	@GetMapping(path="/MostPopularToday")
-	public String MostPopularItem(@RequestParam long rest_id) {
+	public JSONObject MostPopularItem(@RequestParam long rest_id) {
 		
 		JSONObject foodPopString = new JSONObject();
 		
@@ -540,7 +599,10 @@ public class ApplicationController {
 			 }
 	    }
 		
-		return Popular;
+		JSONObject json = new JSONObject();
+		json.put("key", Popular);
+		
+		return json;
 	}
 	
 	public String MostPopularItem(long rest_id, int date) {
@@ -565,7 +627,7 @@ public class ApplicationController {
 	}
 	
 	@GetMapping(path="/MostUsedIngredientToday")
-	public String MostUsedIngredient(@RequestParam long rest_id) {
+	public JSONObject MostUsedIngredient(@RequestParam long rest_id) {
 		
 		JSONObject foodPopString = new JSONObject();
 		
@@ -583,7 +645,9 @@ public class ApplicationController {
 			 }
 	    }
 		
-		return Popular;
+		JSONObject json = new JSONObject();
+		json.put("key", Popular);
+		return json;
 	}
 	
 	public String MostUsedIngredient( long rest_id, int date) {
